@@ -14,7 +14,10 @@ class CartManagers {
     async getProductByCartId(id) {
         const carts = await getFromFile(this.path);
         const cartFind = carts.find((cart) => cart.id === id);
-        return cartFind.products || "Cart not Found";
+        if(cartFind){
+            return cartFind.products;
+        }
+        return "Cart not Found";
     }
 
     async getCartById(id) {
@@ -37,7 +40,8 @@ class CartManagers {
         return cart;
     }
 
-    async addProductToCart(cid, pid) {
+    async addProductToCart(cid, pid, body) {
+        const {quantity} = body;
         const carts = await getFromFile(this.path);
         let validacion = this.validarProducto(cid, pid, carts);
         if (validacion) {
@@ -45,7 +49,7 @@ class CartManagers {
                 if (cart.id === cid) {
                     cart.products.forEach(prod => {
                         if (prod.product === pid) {
-                            prod.quantity += 1;
+                            prod.quantity += quantity;
                         }
                     });
                 }
@@ -55,7 +59,7 @@ class CartManagers {
         } else {
             const productNew = {
                 product: pid,
-                quantity: 1
+                quantity: quantity
             }
             carts.forEach(cart => {
                 if (cart.id === cid) {

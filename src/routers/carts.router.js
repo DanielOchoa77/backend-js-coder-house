@@ -14,7 +14,8 @@ router.get('/carts/:cid', async (req, res) => {
 
 router.post('/carts/:cid/product/:pid', async (req, res) => {
     const { cid, pid } = req.params;
-    res.status(201).json(await cartManager.addProductToCart(cid, pid));
+    const {body} = req;
+    res.status(201).json(await cartManager.addProductToCart(cid, pid, body));
 });
 
 module.exports = router;
