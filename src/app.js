@@ -1,29 +1,16 @@
-import express from "express";
-import { ProductManagers } from "./ProductManager.js";
+const express = require("express");
+const productRouter = require("./routers/products.router.js");
+const cartRouter = require("./routers/carts.router.js");
+const path = require("path");
 
 const app = express();
+const PORT = 8080;
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/static', express.static(path.join(__dirname, '../public')));
 
-const prodManager = new ProductManagers("./products.json");
+app.use('/api', productRouter, cartRouter);
 
-app.get('/products', async (req, res) => {
-    const { query } = req;
-    const { limit } = query;
-    const resultado = await prodManager.getProducts();
-    if (limit) {
-        if (resultado) {
-            res.send(resultado.slice(0, limit));
-        }
-    } else {
-        res.send(resultado);
-    }
-});
-
-app.get('/products/:pid', async (req, res) => {
-    const pid = req.params.pid;
-    res.send(await prodManager.getProductById(parseInt(pid)));
-});
-
-app.listen(8080, () => {
-    console.log('Servidor http escuchando en el puerto 8080.')
+app.listen(PORT, () => {
+    console.log('Servidor http escuchando en el puerto ', PORT);
 })

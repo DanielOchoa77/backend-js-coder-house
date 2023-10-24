@@ -1,6 +1,7 @@
-import fs from "fs";
+const fs = require("fs");
+const { v4 : uuidv4 } = require("uuid");
 
-export class ProductManagers {
+class ProductManagers {
 
     constructor(path) {
         this.path = path;
@@ -11,19 +12,21 @@ export class ProductManagers {
     }
 
     async addProduct(data) {
-        const { title, description, price, thumbnail, code, stock } = data;
+        const { title, description, price, thumbnail, code, stock, status, category } = data;
         const products = await getFromFile(this.path);
         let validacion = this.validarProducto(products, title, description, price, thumbnail, code, stock);
         if (validacion) {
             products.push(
                 {
-                    id: (products.length > 0 ? this.getIdAvailable(products) : 1),
+                    id: uuidv4(),
                     title: title,
                     description: description,
                     price: price,
                     thumbnail: thumbnail,
                     code: code,
-                    stock: stock
+                    stock: stock,
+                    status: status,
+                    category: category
                 }
             );
             await saveInFile(this.path, products);
@@ -32,7 +35,7 @@ export class ProductManagers {
     }
 
     async updateProducts(id, data) {
-        const { title, description, price, thumbnail, code, stock } = data;
+        const { title, description, price, thumbnail, code, stock, status, category } = data;
         const products = await getFromFile(this.path);
         const position = products.findIndex((prod) => prod.id === id);
         if (position === -1) {
@@ -57,10 +60,17 @@ export class ProductManagers {
         if (stock) {
             products[position].stock = stock;
         }
+        if (status) {
+            products[position].status = status;
+        }
+
+        if (category) {
+            products[position].category = category;
+        }
 
         await saveInFile(this.path, products);
 
-        console.log("User successfully updated")
+        console.log("Product successfully updated")
 
     }
 
@@ -76,7 +86,7 @@ export class ProductManagers {
         if (productFind) {
             const productSave = products.filter((prod) => prod.id != id);
             await saveInFile(this.path, productSave);
-            console.log("User successfully deleteded");
+            console.log("Product successfully deleteded");
         } else {
             throw new Error("Product not Found");
         }
@@ -111,6 +121,8 @@ const saveInFile = async (path, data) => {
     const content = JSON.stringify(data, null, '\t');
     await fs.promises.writeFile(path, content, 'utf-8');
 }
+
+module.exports = ProductManagers;
 
 async function test() {
     console.log("Instanciar Clase");

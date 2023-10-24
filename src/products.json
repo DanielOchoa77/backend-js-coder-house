@@ -1,29 +1,123 @@
 [
 	{
-		"id": 1,
-        "title": "producto prueba",
-        "description": "Este es un producto prueba",
-        "price": 200,
-        "thumbnail": "Sin imagen",
-        "code": "abc123",
-        "stock": 25
-    },
+		"id": "c7b2a0ab-ff9b-47ce-a6a4-417c6c9b428f",
+		"title": "producto prueba",
+		"description": "Este es un producto prueba",
+		"price": 200,
+		"thumbnail": "Sin imagen",
+		"code": "abc123",
+		"stock": 25,
+		"status": true,
+		"category": "Zapatillas"
+	},
 	{
-		"id": 2,
+		"id": "30d432fc-caad-4790-9cfe-e2a4273b1ec7",
 		"title": "producto prueba 2",
 		"description": "Este es un producto prueba 2",
 		"price": 200,
 		"thumbnail": "Sin imagen",
 		"code": "abc222",
-		"stock": 20
+		"stock": 20,
+		"status": true,
+		"category": "Zapatillas"
 	},
 	{
-		"id": 3,
+		"id": "ad667fc8-8e98-4704-9a87-0d32ed5eb540",
 		"title": "producto prueba 3",
 		"description": "Este es un producto prueba 3",
 		"price": 200,
 		"thumbnail": "Sin imagen",
 		"code": "abc333",
-		"stock": 25
+		"stock": 25,
+		"status": true,
+		"category": "Zapatillas"
+	},
+	{
+		"id": "ea4f0458-3e55-46d8-9e39-053d0c3c8890",
+		"title": "producto prueba 4",
+		"description": "Este es un producto prueba 4",
+		"price": 200,
+		"thumbnail": "Sin imagen",
+		"code": "abc444",
+		"stock": 25,
+		"status": true,
+		"category": "Zapatillas"
+	},
+	{
+		"id": "13ab2497-9c1a-4a5d-80fc-624f00daf84a",
+		"title": "producto prueba 5",
+		"description": "Este es un producto prueba 5",
+		"price": 200,
+		"thumbnail": "Sin imagen",
+		"code": "abc555",
+		"stock": 25,
+		"status": true,
+		"category": "Zapatillas"
+	},
+	{
+		"id": "8289e741-8de4-4322-b451-ef774487f78d",
+		"title": "producto prueba 6",
+		"description": "Este es un producto prueba 6",
+		"price": 200,
+		"thumbnail": "Sin imagen",
+		"code": "abc66",
+		"stock": 25,
+		"status": true,
+		"category": "Zapatillas"
+	},
+	{
+		"id": "9a30f985-67d3-439e-8a58-8f5f38b611c9",
+		"title": "producto prueba 7",
+		"description": "Este es un producto prueba 7",
+		"price": 200,
+		"thumbnail": "Sin imagen",
+		"code": "abc777",
+		"stock": 25,
+		"status": true,
+		"category": "Zapatillas"
+	},
+	{
+		"id": "6cdc3070-6df6-45e2-8e00-a6b9341e9ec9",
+		"title": "producto prueba 8",
+		"description": "Este es un producto prueba 8",
+		"price": 200,
+		"thumbnail": "Sin imagen",
+		"code": "abc888",
+		"stock": 25,
+		"status": true,
+		"category": "Zapatillas"
+	},
+	{
+		"id": "0ae575b9-b447-43fd-a821-ef62146facf5",
+		"title": "producto prueba 9",
+		"description": "Este es un producto prueba 9",
+		"price": 200,
+		"thumbnail": "Sin imagen",
+		"code": "abc999",
+		"stock": 25,
+		"status": true,
+		"category": "Zapatillas"
+	},
+	{
+		"id": "6fa4bf2a-842c-46dc-9593-18a8e4cfd875",
+		"title": "producto prueba 10",
+		"description": "Este es un producto prueba 10",
+		"price": 200,
+		"thumbnail": "Sin imagen",
+		"code": "abc100",
+		"stock": 25,
+		"status": true,
+		"category": "Zapatillas"
+	},
+	{
+		"id": "cd57c516-206a-43e3-8e44-6546db6073db",
+		"title": "producto prueba 11",
+		"description": "Este es un producto prueba 11",
+		"price": 200,
+		"thumbnail": "Sin imagen",
+		"code": "abc101",
+		"stock": 30,
+		"status": true,
+		"category": "Zapatillas"
 	}
 ]
