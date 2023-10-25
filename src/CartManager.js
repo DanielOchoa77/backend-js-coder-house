@@ -1,5 +1,7 @@
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
+const ProductManagers = require("./ProductManager.js");
+const prodManager = new ProductManagers("./src/products.json");
 
 class CartManagers {
 
@@ -13,9 +15,20 @@ class CartManagers {
 
     async getProductByCartId(id) {
         const carts = await getFromFile(this.path);
+        const products = await prodManager.getProducts();
         const cartFind = carts.find((cart) => cart.id === id);
-        if(cartFind){
-            return cartFind.products;
+        const cartProducts = [];
+        if (cartFind) {
+            cartFind.products.forEach(prod => {
+                const productFind = products.find((prd)=> prd.id === prod.product);
+                if(productFind){
+                    cartProducts.push({
+                        ...productFind,
+                        quantity: prod.quantity
+                    });
+                }    
+            });
+            return cartProducts;
         }
         return "Cart not Found";
     }
@@ -41,7 +54,7 @@ class CartManagers {
     }
 
     async addProductToCart(cid, pid, body) {
-        const {quantity} = body;
+        const { quantity } = body;
         const carts = await getFromFile(this.path);
         let validacion = this.validarProducto(cid, pid, carts);
         if (validacion) {
