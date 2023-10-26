@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { v4 : uuidv4 } = require("uuid");
+const { v4: uuidv4 } = require("uuid");
 
 class ProductManagers {
 
@@ -14,8 +14,8 @@ class ProductManagers {
     async addProduct(data) {
         const { title, description, price, thumbnail, code, stock, status, category } = data;
         const products = await getFromFile(this.path);
-        let validacion = this.validarProducto(products, title, description, price, thumbnail, code, stock);
-        if (validacion) {
+        let validatedProduct =  this.validarProducto(products, title, description, price, thumbnail, code, stock, status, category);
+        if (validatedProduct.validated) {
             products.push(
                 {
                     id: uuidv4(),
@@ -30,7 +30,18 @@ class ProductManagers {
                 }
             );
             await saveInFile(this.path, products);
-            console.log("Product is added successfully")
+            return {
+                message: "Product is added successfully",
+                status: "Success",
+                statusCode: 200
+            };
+        }else{
+            const {message,status,statusCode} = validatedProduct;
+            return {
+                message: message,
+                status: status,
+                statusCode: statusCode
+            };
         }
     }
 
@@ -39,7 +50,11 @@ class ProductManagers {
         const products = await getFromFile(this.path);
         const position = products.findIndex((prod) => prod.id === id);
         if (position === -1) {
-            throw new Error("Product not Found");
+            return {
+                message: "Product not Found",
+                status: "Error",
+                statusCode: 404
+            };
         }
 
         if (title) {
@@ -69,15 +84,22 @@ class ProductManagers {
         }
 
         await saveInFile(this.path, products);
-
-        console.log("Product successfully updated")
-
+        return {
+            message: "Product successfully updated",
+            status: "Success",
+            statusCode: 200
+        };
     }
 
     async getProductById(id) {
         const products = await getFromFile(this.path);
         const productFind = products.find((prod) => prod.id === id);
-        return productFind || "Product not Found";
+
+        return productFind || {
+            message: "Product not Found",
+            status: "Error",
+            statusCode: 404
+        };
     }
 
     async deleteProduct(id) {
@@ -86,26 +108,38 @@ class ProductManagers {
         if (productFind) {
             const productSave = products.filter((prod) => prod.id != id);
             await saveInFile(this.path, productSave);
-            console.log("Product successfully deleteded");
+            return {
+                message: "Product successfully deleteded",
+                status: "Success",
+                statusCode: 200
+            };
         } else {
-            throw new Error("Product not Found");
+            return {
+                message: "Product not Found",
+                status: "Error",
+                statusCode: 404
+            };
         }
     }
 
-    validarProducto(data, title, description, price, thumbnail, code, stock) {
+    validarProducto(data, title, description, price, thumbnail, code, stock, category, status) {
         const codeExists = data.some(prod => prod.code === code);
         if (codeExists) {
-            throw new Error("Not added, because the code is repeated");
-        } else if (!title || !description || !price || !thumbnail || !code || stock === undefined) {
-            throw new Error("All fields are required");
+            return {
+                validated: false,
+                message: "Not added, because the code is repeated",
+                status: "Error",
+                statusCode: 404
+            };
+        } else if (!title || !description || !price || !thumbnail || !code || !stock || !category|| status === undefined) {
+            return {
+                validated: false,
+                message: "All fields are required",
+                status: "Error",
+                statusCode: 404
+            };
         }
-        return true;
-    }
-    getIdAvailable(data) {
-        const nextId = data.reduce((previous, current) => {
-            return current.id > previous.id ? current : previous;
-        });
-        return nextId.id + 1;
+        return {validated: true};
     }
 }
 
@@ -123,85 +157,3 @@ const saveInFile = async (path, data) => {
 }
 
 module.exports = ProductManagers;
-
-async function test() {
-    console.log("Instanciar Clase");
-    const productManager = new ProductManagers("./products.json");
-    console.log("*******************************");
-    console.log("getProducts");
-    console.log("*******************************");
-    console.log(await productManager.getProducts());
-    console.log("*******************************");
-    console.log("addProduct");
-    const data = {
-        title: 'producto prueba',
-        description: 'Este es un producto prueba',
-        price: 200,
-        thumbnail: 'Sin imagen',
-        code: 'abc123',
-        stock: 25
-    }
-
-    const data2 = {
-        title: 'producto prueba 2',
-        description: 'Este es un producto prueba 2',
-        price: 200,
-        thumbnail: 'Sin imagen',
-        code: 'abc222',
-        stock: 20
-    }
-
-    await productManager.addProduct(data);
-    await productManager.addProduct(data2);
-    console.log("getProducts");
-    console.log("*******************************");
-    console.log(await productManager.getProducts());
-
-    console.log("getProductById 1");
-    console.log("*******************************");
-    console.log(await productManager.getProductById(1));
-    console.log("*******************************");
-    console.log("getProductById 5 Not found");
-    console.log("*******************************");
-    console.log(await productManager.getProductById(5));
-    console.log("*******************************");
-
-    console.log("updateProducts");
-    console.log("*******************************");
-    await productManager.updateProducts(1, { title: 'producto prueba update' });
-
-    console.log("*******************************");
-    console.log("getProducts");
-    console.log("*******************************");
-    console.log(await productManager.getProducts());
-
-    console.log("deleteProducts");
-    console.log("*******************************");
-    await productManager.deleteProduct(1);
-
-    console.log("*******************************");
-    console.log("getProducts");
-    console.log("*******************************");
-    console.log(await productManager.getProducts());
-    /*
-        console.log("deleteProducts not found");
-        console.log("*******************************");
-        await productManager.deleteProduct(7);
-    */
-    console.log("*******************************");
-    console.log("addProduct");
-    const data3 = {
-        title: 'producto prueba 3',
-        description: 'Este es un producto prueba 3',
-        price: 200,
-        thumbnail: 'Sin imagen',
-        code: 'abc333',
-        stock: 25
-    }
-    await productManager.addProduct(data3);
-
-    console.log("*******************************");
-    console.log("getProducts");
-    console.log("*******************************");
-    console.log(await productManager.getProducts());
-}

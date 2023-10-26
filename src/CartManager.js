@@ -20,23 +20,31 @@ class CartManagers {
         const cartProducts = [];
         if (cartFind) {
             cartFind.products.forEach(prod => {
-                const productFind = products.find((prd)=> prd.id === prod.product);
-                if(productFind){
+                const productFind = products.find((prd) => prd.id === prod.product);
+                if (productFind) {
                     cartProducts.push({
                         ...productFind,
                         quantity: prod.quantity
                     });
-                }    
+                }
             });
             return cartProducts;
         }
-        return "Cart not Found";
+        return {
+            message: "Cart not Found",
+            status: "Error",
+            statusCode: 404
+        };
     }
 
     async getCartById(id) {
         const carts = await getFromFile(this.path);
         const cartFind = carts.find((cart) => cart.id === id);
-        return cartFind || "Cart not Found";
+        return cartFind || {
+            message: "Cart not Found",
+            status: "Error",
+            statusCode: 404
+        };
     }
 
     async createCart() {
@@ -54,34 +62,62 @@ class CartManagers {
     }
 
     async addProductToCart(cid, pid, body) {
-        const { quantity } = body;
-        const carts = await getFromFile(this.path);
-        let validacion = this.validarProducto(cid, pid, carts);
-        if (validacion) {
-            carts.forEach(cart => {
-                if (cart.id === cid) {
-                    cart.products.forEach(prod => {
-                        if (prod.product === pid) {
-                            prod.quantity += quantity;
+        const products = await prodManager.getProducts();
+        const productFind = products.some((prd) => prd.id === pid);
+        if (productFind) {
+            const { quantity } = body;
+            const carts = await getFromFile(this.path);
+            const cartExists = carts.find(cart => cart.id === cid);
+            if (cartExists) {
+                let validacion = cartExists.products.some(prod => prod.product === pid);
+                if (validacion) {
+                    carts.forEach(cart => {
+                        if (cart.id === cid) {
+                            cart.products.forEach(prod => {
+                                if (prod.product === pid) {
+                                    prod.quantity += quantity;
+                                }
+                            });
                         }
                     });
+                    await saveInFile(this.path, carts);
+                    return {
+                        message: "Product is added successfully",
+                        status: "Success",
+                        statusCode: 200
+                    };
+                } else {
+                    const productNew = {
+                        product: pid,
+                        quantity: quantity
+                    }
+                    carts.forEach(cart => {
+                        if (cart.id === cid) {
+                            cart.products.push(productNew);
+                        }
+                    });
+                    await saveInFile(this.path, carts);
+                    return {
+                        message: "Product is added successfully",
+                        status: "Success",
+                        statusCode: 200
+                    };
                 }
-            });
-            await saveInFile(this.path, carts);
-            console.log("Product is added successfully");
-        } else {
-            const productNew = {
-                product: pid,
-                quantity: quantity
+            }else{
+                return {
+                    message: "Cart not Found",
+                    status: "Error",
+                    statusCode: 404
+                };
             }
-            carts.forEach(cart => {
-                if (cart.id === cid) {
-                    cart.products.push(productNew);
-                }
-            });
-            await saveInFile(this.path, carts);
-            console.log("Product is added successfully");
+        } else {
+            return {
+                message: "Product not Found",
+                status: "Error",
+                statusCode: 404
+            };
         }
+
     }
 
     async updateCarts(id, data) {
@@ -89,7 +125,11 @@ class CartManagers {
         const carts = await getFromFile(this.path);
         const position = carts.findIndex((cart) => cart.id === id);
         if (position === -1) {
-            throw new Error("Cart not Found");
+            return {
+                message: "Cart not Found",
+                status: "Error",
+                statusCode: 404
+            };
         }
 
         if (products) {
@@ -97,9 +137,11 @@ class CartManagers {
         }
 
         await saveInFile(this.path, products);
-
-        console.log("Cart successfully updated")
-
+        return {
+            message: "Cart successfully updated",
+            status: "Success",
+            statusCode: 200
+        };
     }
 
     async deleteProduct(id) {
@@ -108,20 +150,21 @@ class CartManagers {
         if (cartsFind) {
             const cartSave = carts.filter((prod) => prod.id != id);
             await saveInFile(this.path, cartSave);
-            console.log("Cart successfully deleteded");
+            return {
+                message: "Cart successfully deleteded",
+                status: "Success",
+                statusCode: 200
+            };
         } else {
-            throw new Error("Cart not Found");
+            return {
+                message: "Cart not Found",
+                status: "Error",
+                statusCode: 404
+            };
         }
     }
 
-    validarProducto(idCart, idProduct, carts) {
-        const cartExists = carts.find(cart => cart.id === idCart);
-        if (cartExists) {
-            return cartExists.products.some(prod => prod.product === idProduct);
-        } else {
-            throw new Error("Cart not Found");
-        }
-    }
+
 }
 
 const getFromFile = async (path) => {
