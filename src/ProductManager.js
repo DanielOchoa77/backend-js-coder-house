@@ -1,7 +1,7 @@
-const fs = require("fs");
-const { v4: uuidv4 } = require("uuid");
+import fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 
-class ProductManagers {
+export class ProductManagers {
 
     constructor(path) {
         this.path = path;
@@ -12,9 +12,11 @@ class ProductManagers {
     }
 
     async addProduct(data) {
+        console.log(data);
         const { title, description, price, thumbnail, code, stock, status, category } = data;
         const products = await getFromFile(this.path);
         let validatedProduct =  this.validarProducto(products, title, description, price, thumbnail, code, stock, status, category);
+        console.log(validatedProduct);
         if (validatedProduct.validated) {
             products.push(
                 {
@@ -131,7 +133,7 @@ class ProductManagers {
                 status: "Error",
                 statusCode: 404
             };
-        } else if (!title || !description || !price || !thumbnail || !code || !stock || !category|| status === undefined) {
+        } else if ((!title || !description || !price || !thumbnail || !code || !stock || !category === undefined) && status != null ) {
             return {
                 validated: false,
                 message: "All fields are required",
@@ -155,5 +157,3 @@ const saveInFile = async (path, data) => {
     const content = JSON.stringify(data, null, '\t');
     await fs.promises.writeFile(path, content, 'utf-8');
 }
-
-module.exports = ProductManagers;

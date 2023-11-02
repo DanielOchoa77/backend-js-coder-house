@@ -1,0 +1,37 @@
+<h1>Agregar Producto</h1>
+<form id="form-product">
+  <input id="input-title" type="text" placeholder="Titulo" required>
+  <input id="input-description" type="text" placeholder="Descripcion" required>
+  <input id="input-price" type="number" placeholder="Precio" required>
+  <input id="input-thumbnail" type="text" placeholder="Link imagen" required>
+  <input id="input-code" type="text" placeholder="Codigo" required>
+  <input id="input-stock" type="number" placeholder="Stock" required>
+  <input id="input-category" type="text" placeholder="Categoria" required>
+  <select name="input-state" id="input-state" required>
+    <option value="true">Habilitado</option>
+    <option value="false">Deshabilitado</option>
+  </select>
+  <input type="submit" value="Crear">
+</form>
+    <h1>Lista de productos</h1>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Titulo</th>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Link imagen</th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Stock</th>
+          <th scope="col">Categoria</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody id="lista-product">
+      </tbody>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/index.js"></script>
