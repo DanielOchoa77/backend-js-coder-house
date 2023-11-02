@@ -119,5 +119,16 @@
 		"stock": 40,
 		"status": true,
 		"category": "Zapatillas"
+	},
+	{
+		"id": "c7003655-eb2e-4e4e-bb26-d509d7ce8708",
+		"title": "producto prueba 12",
+		"description": "Este es un producto prueba 12",
+		"price": 2345,
+		"thumbnail": "Sin imagen",
+		"code": "abc103",
+		"stock": 45,
+		"status": true,
+		"category": "Zapatillas"
 	}
 ]

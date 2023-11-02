@@ -15,7 +15,7 @@ export class ProductManagers {
         console.log(data);
         const { title, description, price, thumbnail, code, stock, status, category } = data;
         const products = await getFromFile(this.path);
-        let validatedProduct =  this.validarProducto(products, title, description, price, thumbnail, code, stock, status, category);
+        let validatedProduct =  this.validarProducto(products, title, description, price, code, stock, status, category);
         console.log(validatedProduct);
         if (validatedProduct.validated) {
             products.push(
@@ -124,7 +124,7 @@ export class ProductManagers {
         }
     }
 
-    validarProducto(data, title, description, price, thumbnail, code, stock, category, status) {
+    validarProducto(data, title, description, price, code, stock, category, status) {
         const codeExists = data.some(prod => prod.code === code);
         if (codeExists) {
             return {
@@ -133,7 +133,7 @@ export class ProductManagers {
                 status: "Error",
                 statusCode: 404
             };
-        } else if ((!title || !description || !price || !thumbnail || !code || !stock || !category === undefined) && status != null ) {
+        } else if ((!title || !description || !price || !code || !stock || !category === undefined) && status != null ) {
             return {
                 validated: false,
                 message: "All fields are required",
