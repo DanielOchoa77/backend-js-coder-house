@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import {ProductManagers} from './ProductManager.js';
+import {ProductManagers} from './dao/Dao/ProductManager.js';
 const prodManager = new ProductManagers("./src/products.json");
 
 let io;
