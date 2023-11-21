@@ -13,6 +13,7 @@ export const init = (httpServer) => {
     console.log("cliente conectado : "+ socketClient.id);
     socketClient.emit('update-product', productList);
     
+    
     socketClient.on('new-product',async (newProduct) => {
       await prodManager.addProduct(newProduct);
       productList = await prodManager.getProducts();

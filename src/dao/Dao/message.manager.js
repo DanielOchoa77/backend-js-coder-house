@@ -1,14 +1,14 @@
 import MessageModel from '../models/message.model.js';
 
-export default class MessageModel {
+export default class MessageManagers {
   static async get() {
 
     try {
       const messagesList = await MessageModel.find();
       if (messagesList) {
         return {
-          msg: messagesList,
-          message: "Messages found",
+          message: messagesList,
+          msg: "Messages found",
           status: "Success",
           statusCode: 200
         };
@@ -29,18 +29,19 @@ export default class MessageModel {
     }
   }
 
-  static async saveMessage(user, msg) {
+  static async saveMessage(data) {
     try {
-      const message = {
+     const {user, message}=data;
+      const messageBody = {
         user: user,
-        message: msg
+        message: message
       }
-      const messageResult = await MessageModel.create(message);
-      console.log(`message was created successfully (${message._id}).`);
+      const messageResult = await MessageModel.create(messageBody);
+      console.log("message was created successfully");
       if (messageResult) {
         return {
           message: messageResult,
-          message: "Message was created successfully",
+          msg: "Message was created successfully",
           status: "Success",
           statusCode: 201
         };
