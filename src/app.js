@@ -1,7 +1,7 @@
 import express from 'express';
-import productRouter from './routers/products.router.js';
-import cartRouter from './routers/carts.router.js';
-import homeRouter from './routers/home.router.js';
+import productRouter from './routers/api/products.router.js';
+import cartRouter from './routers/api/carts.router.js';
+import homeRouter from './routers/views/home.router.js';
 import handlebars from 'express-handlebars';
 import path from 'path';
 import { __dirname } from './utils.js';
