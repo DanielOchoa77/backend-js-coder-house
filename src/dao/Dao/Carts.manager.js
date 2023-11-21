@@ -6,10 +6,9 @@ export default class CartsManager {
 
     try {
       const cartsList = await CartModel.find();
-      console.log(cartsList);
       if (cartsList) {
         return {
-          Carts: cartsList,
+          carts: cartsList,
           message: "Cart found",
           status: "Success",
           statusCode: 200
@@ -92,9 +91,8 @@ export default class CartsManager {
         const cartExists = await CartModel.findById(cid);
         if (cartExists) {
           const productExistInCart = await CartModel.find(
-            {$and:[{ '_id': cid },{'products.product':pid}]}, { "products.$": true } //indica traer todos los campos
+            {$and:[{ '_id': cid },{'products.product':pid}]}, { "products.$": true }
           );
-          console.log(productExistInCart);
           if (productExistInCart && productExistInCart.length > 0) {
             cartExists.products.forEach(prod => {
               if (prod.product === pid) {
