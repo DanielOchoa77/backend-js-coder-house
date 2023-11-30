@@ -1,7 +1,35 @@
 import ProductModel from '../models/product.model.js';
 
 export default class ProductsManager {
-  static async get() {
+
+  static async get(criteria, options) {
+    try {
+    const productsList = await ProductModel.paginate(criteria, options);
+    if (productsList) {
+      return {
+        products: productsList,
+        message: "Product found",
+        status: "Success",
+        statusCode: 200
+      };
+    } else {
+      return {
+        message: "Products not Found",
+        status: "Error",
+        statusCode: 404
+      };
+    }
+
+    } catch (error) {
+      console.log(error.message);
+      return {
+        message: "Error find products",
+        status: "Error",
+        statusCode: 400
+      };
+    }
+  }
+  /*static async get() {
 
     try {
       const productsList = await ProductModel.find();
@@ -28,12 +56,11 @@ export default class ProductsManager {
         statusCode: 400
       };
     }
-  }
+  }*/
 
   static async getById(id) {
     try {
       const product = await ProductModel.findById(id);
-      console.log(product);
       if (product) {
         return {
           product: product,

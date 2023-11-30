@@ -49,13 +49,11 @@ export class CartManagers {
 
     async createCart() {
         const carts = await getFromFile(this.path);
-        console.log(carts);
         const cart = {
             id: uuidv4(),
             products: []
         }
         carts.push(cart);
-        console.log(carts);
         await saveInFile(this.path, carts);
         console.log("Cart was created successfully");
         return cart;

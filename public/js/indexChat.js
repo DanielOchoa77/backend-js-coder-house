@@ -17,7 +17,6 @@
     });
 
   socket.on('update-conversation', (conversation) => {
-    console.log('conversation', conversation);
     const logMessages = document.getElementById('log-messages');
     logMessages.innerText = '';
     conversation.forEach((message) => {

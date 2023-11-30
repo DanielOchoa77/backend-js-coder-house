@@ -21,7 +21,6 @@ export const init = (httpServer) => {
     });
 
     socketClient.on('delete-product',async (productId) => {
-      console.log("efewfwef");
       await prodManager.deleteProduct(productId);
       productList = await prodManager.getProducts();
       io.emit('update-product', productList);

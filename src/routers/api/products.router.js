@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import ProductsManager from '../../dao/Dao/Products.manager.js';
+import { buildResponsePaginated } from '../../utils.js';
 const router = Router();
 
-router.get('/products', async (req, res) => {
+/*router.get('/products', async (req, res) => {
     const { query } = req;
     const { limit } = query;
     const result = await ProductsManager.get();
@@ -11,6 +12,20 @@ router.get('/products', async (req, res) => {
     } else {
         res.status(result.statusCode).json(result.products ? result.products : result);
     }
+});*/
+
+router.get('/products', async (req, res) => {
+    const { limit = 10, page = 1, sort, search } = req.query;
+    const criteria = {};
+    const options = { limit, page };
+    if (sort) {
+        options.sort = { price: sort };
+    }
+    if (search) {
+        criteria.category = search;
+    }
+    const result = await ProductsManager.get(criteria, options);
+    res.status(result.statusCode).json(result.products ? buildResponsePaginated({ ...result.products, sort, search }) : result);
 });
 
 router.get('/products/:pid', async (req, res) => {

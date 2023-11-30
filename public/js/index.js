@@ -13,7 +13,6 @@
       const inputStock = document.getElementById('input-stock');
       const inputCategory = document.getElementById('input-category');
       const inputState = document.getElementById('input-state');
-      console.log(inputState.value);
 
       const newProduct = {
         "title": inputTitle.value,
@@ -39,7 +38,6 @@
     });
 
   socket.on('update-product', (products) => {
-    console.log('products', products);
     const productList = document.getElementById('lista-product');
     productList.innerText = '';
     products.forEach((product) => {
