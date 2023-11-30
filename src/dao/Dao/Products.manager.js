@@ -126,7 +126,8 @@ export default class ProductsManager {
     try {
       const productUpdated = await ProductModel.updateOne({ _id: id }, { $set: data });
       console.log(`Product successfully updated (${id}).`);
-      if (productUpdated && productUpdated.deletedCount > 0) {
+      console.log(productUpdated);
+      if (productUpdated && productUpdated.modifiedCount > 0) {
         return {
           message: "Product successfully updated",
           status: "Success",
