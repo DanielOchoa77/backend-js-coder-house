@@ -1,3 +1,17 @@
+<article>
+  <header>
+    <h1>Te damos la bienvenida</h1>
+  </header>
+  <p><strong>Nombre:</strong> {{userSession.first_name}}</p>
+  <p><strong>Apellido:</strong> {{userSession.last_name}}</p>
+  <p><strong>Correo:</strong> {{userSession.email}}</p>
+  <p><strong>Edad:</strong> {{userSession.age}}</p>
+  <p><strong>Rol:</strong> {{userSession.role}}</p>
+  <footer>
+    <a href="/api/session/logout" role="button">Cerrar Sesión</a>
+  </footer>
+</article>
+
 <h1>Lista de productos</h1>
   <table>
     <tr>

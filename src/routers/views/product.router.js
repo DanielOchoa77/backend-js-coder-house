@@ -9,6 +9,11 @@ router.get('/products', async (req, res) => {
     const { limit = 10, page = 1, sort, search } = req.query;
     const criteria = {};
     const options = { limit, page };
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+    const { user } = req.session;
+
     if (sort) {
         options.sort = { price: sort };
     }
@@ -17,7 +22,7 @@ router.get('/products', async (req, res) => {
     }
     const result = await ProductsManager.get(criteria, options);
     const data = buildResponsePaginatedHome({ ...result.products, sort, search });
-    res.render('products', { ...data });
+    res.render('products', { ...data, userSession: user });
 });
 
 router.get('/carts/:cid', async (req, res) => {
@@ -25,5 +30,6 @@ router.get('/carts/:cid', async (req, res) => {
     const result = await CartsManager.getProductByCartId(cid);
     res.render('carts', { cart: cid, result: result.product.map((prod) => prod.toJSON()) });
 });
+
 
 export default router;
