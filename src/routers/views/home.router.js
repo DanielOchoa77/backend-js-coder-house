@@ -7,7 +7,6 @@ router.get('/', async (req, res) => {
     res.render('login', { title: 'Hello People 🖐️' });
 });
 
-
 router.get('/realTimeProducts', async (req, res) => {
     const products = await prodManager.getProducts();
     res.render('realTimeProducts');
@@ -20,5 +19,9 @@ router.get('/login', (req, res) => {
 router.get('/register', (req, res) => {
     res.render('register', { title: 'Hello People 🖐️' });
 });
+
+router.get('/recovery-password', (req,res) => {
+    res.render('recovery-password', { title: 'Hello People 🖐️' });
+  });
 
 export default router;

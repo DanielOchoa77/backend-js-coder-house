@@ -13,6 +13,9 @@ import sessions from 'express-session';
 import MongoStore from 'connect-mongo';
 import usersRouter from './routers/api/users.router.js';
 import sessionsRouter from './routers/views/sessions.router.js';
+import passport from 'passport';
+import { init as initPassport } from './config/passport.config.js';
+
 
 const app = express();
 
@@ -37,6 +40,10 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.engine('handlebars', handlebars.engine());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
+
+initPassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 app.use('/', prodRouterview, homeRouterview);
