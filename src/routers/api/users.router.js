@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import UserModel from '../../dao/models/user.model.js';
 
-const 
-router = Router();
+const router = Router();
 
 router.get('/users', async (req, res, next) => {
   try {
