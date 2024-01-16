@@ -1,7 +1,7 @@
 import CartModel from '../models/cart.model.js';
-import ProductsManager from '../../dao/Dao/Products.manager.js';
+import ProductsController from '../../controllers/Products.controller.js';
 
-export default class CartsManager {
+export default class CartsController {
   static async get() {
 
     try {
@@ -84,7 +84,7 @@ export default class CartsManager {
 
   static async addProductToCart(cid, pid, body) {
     try {
-      const productExist = await ProductsManager.getById(pid);
+      const productExist = await ProductsController.getById(pid);
       if (productExist.product) {
         const { quantity } = body;
         const cartExists = await CartModel.findById(cid);
@@ -206,7 +206,7 @@ export default class CartsManager {
 
   static async updateQuantityToProduct(cid, pid, body) {
     try {
-      const productExist = await ProductsManager.getById(pid);
+      const productExist = await ProductsController.getById(pid);
       if (productExist.product) {
         const { quantity } = body;
         const cartExists = await CartModel.findById(cid);

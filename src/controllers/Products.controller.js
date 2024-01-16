@@ -1,24 +1,24 @@
-import ProductModel from '../models/product.model.js';
+import ProductsService from '../services/Products.service.js';
 
-export default class ProductsManager {
+export default class ProductsController {
 
   static async get(criteria, options) {
     try {
-    const productsList = await ProductModel.paginate(criteria, options);
-    if (productsList) {
-      return {
-        products: productsList,
-        message: "Product found",
-        status: "Success",
-        statusCode: 200
-      };
-    } else {
-      return {
-        message: "Products not Found",
-        status: "Error",
-        statusCode: 404
-      };
-    }
+      const productsList = await ProductsService.getPaginate(criteria, options);
+      if (productsList) {
+        return {
+          products: productsList,
+          message: "Product found",
+          status: "Success",
+          statusCode: 200
+        };
+      } else {
+        return {
+          message: "Products not Found",
+          status: "Error",
+          statusCode: 404
+        };
+      }
 
     } catch (error) {
       console.log(error.message);
@@ -60,7 +60,7 @@ export default class ProductsManager {
 
   static async getById(id) {
     try {
-      const product = await ProductModel.findById(id);
+      const product = await ProductsService.findById(id);
       if (product) {
         return {
           product: product,
@@ -87,7 +87,7 @@ export default class ProductsManager {
 
   static async create(data) {
     try {
-      const findProductByCode = await ProductModel.findOne({ 'code': data.code });
+      const findProductByCode = await ProductsService.findByCode(data.code);
       if (findProductByCode) {
         return {
           message: "Not added, because the code is repeated",
@@ -95,7 +95,7 @@ export default class ProductsManager {
           statusCode: 404
         };
       } else {
-        const product = await ProductModel.create(data);
+        const product = await ProductsService.create(data);
         console.log(`Product is created successfully (${product._id}).`);
         if (product) {
           return {
@@ -124,7 +124,7 @@ export default class ProductsManager {
 
   static async updateById(id, data) {
     try {
-      const productUpdated = await ProductModel.updateOne({ _id: id }, { $set: data });
+      const productUpdated = await ProductsService.updateById(id, data);
       console.log(`Product successfully updated (${id}).`);
       console.log(productUpdated);
       if (productUpdated && productUpdated.modifiedCount > 0) {
@@ -152,7 +152,7 @@ export default class ProductsManager {
 
   static async deleteById(id) {
     try {
-      const productDeleteded = await ProductModel.deleteOne({ _id: id });
+      const productDeleteded = await ProductsService.deleteById({ _id: id });
       console.log(`Product successfully deleteded (${id}).`);
       if (productDeleteded && productDeleteded.deletedCount > 0) {
         return {

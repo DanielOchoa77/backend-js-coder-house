@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import MessageManager from '../src/dao/Dao/Message.manager.js';
+import MessageManager from './dao/Dao/Message.controller.js';
 import {ProductManagers} from './dao/Dao/ProductManager.js';
 const prodManager = new ProductManagers("./src/products.json");
 

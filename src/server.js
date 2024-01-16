@@ -3,11 +3,13 @@ import http from 'http';
 import app from './app.js';
 import { init } from './socket.js';
 import { initMongo } from './db/mongodb.js';
+import config from './config/config.js';
 
 await initMongo();
 
 const server = http.createServer(app);
-const PORT = 8080;
+const PORT = config.port;
+//const PORT = 8080;
 
 init(server);
 
