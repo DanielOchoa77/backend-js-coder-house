@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 
-const userItemSchema = new mongoose.Schema({
+const cartItemSchema = new mongoose.Schema({
   cart: { type: mongoose.Schema.Types.ObjectId, ref: 'Cart' }
 }, { _id: false });
 
@@ -11,7 +11,7 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   age: { type: Number, required: false },
   password: { type: String },
-  cartId: { type: [userItemSchema], default:[] },
+  cartId: { type: [cartItemSchema], default:[] },
   role: { type: String, default: 'user' },
 
 }, { timestamps: true });
