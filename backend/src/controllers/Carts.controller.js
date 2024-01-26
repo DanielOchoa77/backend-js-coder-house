@@ -259,4 +259,35 @@ export default class CartsController {
       };
     }
   }
+
+  static async postPurchaser(req) {
+    const { cid } = req.params;
+    const email = req.user.email;
+    const cartId = req.user.cartId;
+    const cartFind = cartId.find((e) => e.cartId === cid);
+    if (!cartFind) {
+        throw new NotFoundException(`Carrito con id ${cid} no asigando al usuario`);
+    }
+
+    const cart = await CartsService.getById(cid);
+    const productsInCart = cart.products;
+    let noStokProduct = [];
+
+    for (const prod in productsInCart) {
+        console.log(prod);
+        let product = await ProductsController.getById(prod.product);
+    
+        if (prod.quantity <= product.stock) {
+            console.log('antes', product);
+            product.stock = product.stock - prod.quantity;
+            await ProductsController.updateById(prod.product, { "stock": product.stock });
+        } else {
+            noStokProduct.push(prod);
+        }
+    }
+    if (noStokProduct.length > 0) {
+        const respuesta = await CartsService.updateByIdSet(cid, { products: noStokProduct });
+    }
+
+}
 }
