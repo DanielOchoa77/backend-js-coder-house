@@ -1,4 +1,4 @@
-import {usersRepository} from "../repositories/users.repositoryImp";
+import {usersRepository} from "../repositories/users.repositoryImp.js";
 
 export default class UserService {
     static getAll(filter = {}) {

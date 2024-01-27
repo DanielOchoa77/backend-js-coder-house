@@ -28,7 +28,6 @@ export default class UserRepository{
     }
 
     async updateByIdPush(uid, cid) {
-        console.log(cid);
         return await this.dao.updateByIdPush({ _id: uid }, { $push: { cartId:{'cartId' : cid}  } });
     }
 }

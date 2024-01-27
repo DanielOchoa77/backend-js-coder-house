@@ -83,6 +83,7 @@ router.post('/auth/login', async (req, res, next) => {
 
 router.get('/auth/current', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res) => {
   const user = await UserModel.findById(req.user.id);
+  console.log(user);
   const userDTO = new UserDTO(user);
   res.status(200).json(userDTO);
 });

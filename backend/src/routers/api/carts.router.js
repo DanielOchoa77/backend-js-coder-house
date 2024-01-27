@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/carts', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res, next) => {
     try {
-        const result = await CartsController.createCart();
+        const result = await CartsController.createCart(req.user.id);
         res.status(result.statusCode).json(result._id ? result.cart : result);
     } catch (error) {
         next(error);

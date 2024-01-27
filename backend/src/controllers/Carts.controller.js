@@ -1,5 +1,6 @@
 import CartsService from '../services/Carts.service.js';
 import ProductsController from './Products.controller.js';
+import UserServices from "../services/Users.service.js";
 
 export default class CartsController {
   static async get() {
@@ -30,7 +31,7 @@ export default class CartsController {
     }
   }
 
-  static async createCart() {
+  static async createCart(userid) {
     try {
       const data = {
         products: []
@@ -38,6 +39,8 @@ export default class CartsController {
       const cart = await CartsService.create(data);
       console.log(`Cart was created successfully (${cart._id}).`);
       if (cart) {
+        console.log(cart);
+        await UserServices.updateByIdPush(userid, cart._id);
         return {
           cart: cart,
           message: "Cart was created successfully",
