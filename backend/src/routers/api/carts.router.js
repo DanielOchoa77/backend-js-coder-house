@@ -1,9 +1,10 @@
-import { Router } from 'express';
+import e, { Router } from 'express';
 import CartsController from '../../controllers/Carts.controller.js';
 import passport from 'passport';
+import { authMiddleware } from '../../utils.js';
 const router = Router();
 
-router.post('/carts', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.post('/carts', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res, next) => {
     try {
         const result = await CartsController.createCart();
         res.status(result.statusCode).json(result._id ? result.cart : result);
@@ -12,7 +13,7 @@ router.post('/carts', passport.authenticate('jwt', { session: false }), async (r
     }
 });
 
-router.get('/carts/:cid', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.get('/carts/:cid', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res, next) => {
     try {
         const cid = req.params.cid;
         const result = await CartsController.getProductByCartId(cid);
@@ -22,7 +23,7 @@ router.get('/carts/:cid', passport.authenticate('jwt', { session: false }), asyn
     }
 });
 
-router.post('/carts/:cid/product/:pid', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.post('/carts/:cid/product/:pid', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res, next) => {
     try {
         const { cid, pid } = req.params;
         const { body } = req;
@@ -33,7 +34,7 @@ router.post('/carts/:cid/product/:pid', passport.authenticate('jwt', { session: 
     }
 });
 
-router.delete('/carts/:cid/products/:pid', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.delete('/carts/:cid/products/:pid', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res, next) => {
     try {
         const { cid, pid } = req.params;
         const result = await CartsController.deleteProduct(cid, pid);
@@ -43,7 +44,7 @@ router.delete('/carts/:cid/products/:pid', passport.authenticate('jwt', { sessio
     }
 });
 
-router.put('/carts/:cid', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.put('/carts/:cid', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res, next) => {
     try {
         const { cid } = req.params;
         const { body } = req;
@@ -54,7 +55,7 @@ router.put('/carts/:cid', passport.authenticate('jwt', { session: false }), asyn
     }
 });
 
-router.put('/carts/:cid/product/:pid', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.put('/carts/:cid/product/:pid', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res, next) => {
     try {
         const { cid, pid } = req.params;
         const { body } = req;
@@ -65,7 +66,7 @@ router.put('/carts/:cid/product/:pid', passport.authenticate('jwt', { session: f
     }
 });
 
-router.delete('/carts/:cid/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.delete('/carts/:cid/', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res, next) => {
     try {
         const { cid } = req.params;
         const result = await CartsController.deleteAllProductsToCards(cid);
@@ -74,5 +75,18 @@ router.delete('/carts/:cid/', passport.authenticate('jwt', { session: false }), 
         next(error);
     }
 });
+
+
+
+router.post('/carts/:cid/purchaser', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res, next) => {
+    try {
+        console.log(req);
+        const ticket = await CartsController.executePurchase(req);
+        res.status(200).json(ticket);
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 export default router;

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import ProductsController from '../../controllers/Products.controller.js';
-import { buildResponsePaginated } from '../../utils.js';
+import { buildResponsePaginated, authMiddleware } from '../../utils.js';
 import passport from 'passport';
 const router = Router();
 
@@ -44,7 +44,7 @@ router.get('/products/:pid', passport.authenticate('jwt', { session: false }), a
     }
 });
 
-router.put('/products/:pid', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.put('/products/:pid', passport.authenticate('jwt', { session: false }), authMiddleware('admin'), async (req, res, next) => {
     try {
         const { body } = req;
         const pid = req.params.pid;
@@ -55,7 +55,7 @@ router.put('/products/:pid', passport.authenticate('jwt', { session: false }), a
     }
 });
 
-router.post('/products', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.post('/products', passport.authenticate('jwt', { session: false }), authMiddleware('admin'), async (req, res, next) => {
     try {
         const { body } = req;
         const result = await ProductsController.create(body);
@@ -65,7 +65,7 @@ router.post('/products', passport.authenticate('jwt', { session: false }), async
     }
 });
 
-router.delete('/products/:pid', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.delete('/products/:pid', passport.authenticate('jwt', { session: false }), authMiddleware('admin'), async (req, res) => {
     try {
         const pid = req.params.pid;
         const result = await ProductsController.deleteById(pid);

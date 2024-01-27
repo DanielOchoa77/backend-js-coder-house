@@ -14,6 +14,10 @@ export default class CartRepository {
     async findById(id) {
         return this.dao.findById(id);
     }
+    
+    async findByIdPopulate(id) {
+        return this.dao.findById(id).populate('products.product');
+    }
 
     async findByIdWithCondition(condition) {
         return this.dao.findByIdWithCondition(condition);

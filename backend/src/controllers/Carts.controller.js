@@ -57,7 +57,7 @@ export default class CartsController {
 
   static async getProductByCartId(id) {
     try {
-      const cart = await CartsService.findById(id).populate('products.product');
+      const cart = await CartsService.findByIdPopulate(id);
       if (cart) {
         return {
           product: cart.products,
@@ -97,7 +97,7 @@ export default class CartsController {
               }
             });
             const updateProd = { 'products': cartExists.products };
-            const updateQuantity = await CartsService.updateById(cid, updateProd);
+            const updateQuantity = await CartsService.updateByIdSet(cid, updateProd);
             return {
               cart: updateQuantity,
               message: "Product is updated successfully",
@@ -109,7 +109,7 @@ export default class CartsController {
               product: pid,
               quantity: quantity
             }
-            const updateQuantity = await CartsService.updateById(cid, { products: productNew });
+            const updateQuantity = await CartsService.updateByIdPush(cid, { products: productNew });
             return {
               cart: updateQuantity,
               message: "Product is added successfully",
@@ -149,7 +149,7 @@ export default class CartsController {
         if (productExistInCart && productExistInCart.length > 0) {
           const productsUpdateInCarrito = cartExists.products.filter(prod => prod.product.toString() !== pid);
           const updateProd = { 'products': productsUpdateInCarrito };
-          const updateProduct = await CartsService.updateById(cid, updateProd);
+          const updateProduct = await CartsService.updateByIdSet(cid, updateProd);
           return {
             cart: updateProduct,
             message: "Product successfully deleteded",
@@ -182,7 +182,7 @@ export default class CartsController {
 
   static async updateProduct(cid, body) {
     try {
-      const updateProduct = await CartsService.updateByIdPush(cid, { 'products': body });
+      const updateProduct = await CartsService.updateByIdSet(cid, { 'products': body });
       return {
         cart: updateProduct,
         message: "Product is updated successfully",
@@ -243,7 +243,7 @@ export default class CartsController {
 
   static async deleteAllProductsToCards(cid) {
     try {
-      const updateProduct = await CartsService.updateByIdSet(id, { 'products': [] } );
+      const updateProduct = await CartsService.updateByIdSet(id, { 'products': [] });
       return {
         cart: updateProduct,
         message: "Product is updated successfully",
@@ -260,34 +260,60 @@ export default class CartsController {
     }
   }
 
-  static async postPurchaser(req) {
+  static async executePurchase(req) {
+    let noStokProductList = [];
+    let stokProductList = [];
+    let result = {};
     const { cid } = req.params;
     const email = req.user.email;
-    const cartId = req.user.cartId;
-    const cartFind = cartId.find((e) => e.cartId === cid);
+    const cartList = req.user.cartId;
+    console.log(cartList);
+    const cartFind = cartList.find((card) => card.cartId === cid);
     if (!cartFind) {
-        throw new NotFoundException(`Carrito con id ${cid} no asigando al usuario`);
+      return {
+        message: `Carrito con id ${cid} no registado al usuario`,
+        status: "Success",
+        statusCode: 200
+      };
     }
-
     const cart = await CartsService.getById(cid);
-    const productsInCart = cart.products;
-    let noStokProduct = [];
+    const productsListCart = cart.products;
 
-    for (const prod in productsInCart) {
-        console.log(prod);
-        let product = await ProductsController.getById(prod.product);
-    
-        if (prod.quantity <= product.stock) {
-            console.log('antes', product);
-            product.stock = product.stock - prod.quantity;
-            await ProductsController.updateById(prod.product, { "stock": product.stock });
-        } else {
-            noStokProduct.push(prod);
-        }
+
+    for (const prod in productsListCart) {
+      let product = await ProductsController.getById(prod.product);
+
+      if (prod.quantity <= product.stock) {
+        product.stock = product.stock - e.quantity;
+        let productStok = {
+          id: prod.product,
+          price: product.price,
+          quantity: prod.quantity
+        };
+        stokProductList.push(productStok);
+        await ProductsController.updateById(prod.product, { "stock": product.stock });
+      } else {
+        noStokProductList.push(prod);
+      }
     }
-    if (noStokProduct.length > 0) {
-        const respuesta = await CartsService.updateByIdSet(cid, { products: noStokProduct });
+    if (noStokProductList.length > 0) {
+      await CartsService.updateByIdSet(cid, { products: noStokProduct });
+      result.productosSinStock = noStokProductList;
+    } else {
+      await CartsService.updateByIdSet(cid, { products: [] });
     }
 
-}
+    if (stokProductList.length > 0) {
+      const amount = stokProductList.reduce((total, producto) => total + (producto.price * producto.quantity), 0);
+      const saveTicket = {
+        amount: amount,
+        purchaser: email,
+        purchaser_datetime: new Date()
+      }
+      const ticket = await TicketsController.create(saveTicket);
+      result.infoTicket = ticket;
+
+    }
+    return responseTicket;
+  }
 }

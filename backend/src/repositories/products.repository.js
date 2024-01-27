@@ -12,7 +12,6 @@ export default class ProductRepository {
     }
 
     async findById(id) {
-        console.log("id",id)
         return this.dao.findById(id);
     }
 

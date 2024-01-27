@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import MessageManager from '../../dao/Dao/Message.controller.js';
 import { newMessageFromAPI } from '../../socket.js';
+import { authMiddleware } from "../../utils.js";
+
 const router = Router();
 
 router.post('/messages', async (req, res) => {
@@ -10,7 +12,7 @@ router.post('/messages', async (req, res) => {
     res.status(result.statusCode).json(result.message ? result.message : result);
 });
 
-router.get('/', (req, res) => {
+router.get('/',authMiddleware('user'), (req, res) => {
     res.render('chat', { title: 'Chat' });
   });
 

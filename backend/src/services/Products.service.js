@@ -11,12 +11,10 @@ export default class ProductsService {
     }
 
     static async findById(id) {
-        console.log("awdwef")
         return productsRepository.findById(id);
     }
 
     static async findByCode(code) {
-        console.log("awdwef")
         return productsRepository.findOne({ 'code': code });
     }
 

@@ -14,25 +14,29 @@ export default class CartsService {
         return cartsRepository.findById(id);
     }
 
+    static async findByIdPopulate(id) {
+        return cartsRepository.findByIdPopulate(id);
+    }
+
     static async findByIdWithCondition(condition) {
         return cartsRepository.findByIdWithCondition(condition);
     }
 
     static async findByIdAndProductId(cid, pid) {
-        return cartsRepository.find(cid, pid);
+        return cartsRepository.findByIdAndProductId(cid, pid);
     }
 
     static async updateByIdSet(tid, data) {
-        return cartsRepository.updateById(tid, data);
+        return cartsRepository.updateByIdSet(tid, data);
     }
 
     static async updateByIdPush(tid, data) {
-        return cartsRepository.updateById(tid, data);
+        return cartsRepository.updateByIdPush(tid, data);
     }
 
 
     static async updateByIdAndProductIdAndQuantity(cid, pid, quantity) {
-        return cartsRepository.updateById({ $and: [{ '_id': cid }, { 'products.product': pid }] }, { $set: { 'products.$.quantity': quantity } });
+        return cartsRepository.updateByIdAndProductIdAndQuantity({ $and: [{ '_id': cid }, { 'products.product': pid }] }, { $set: { 'products.$.quantity': quantity } });
     }
 
     static async deleteById(tid) {

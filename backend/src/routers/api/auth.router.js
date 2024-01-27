@@ -1,8 +1,8 @@
 import { Router } from 'express';
-
+import passport from 'passport';
 import UserModel from '../../dao/models/user.model.js';
-
-import { createHash, verifyPassword, createToken } from '../../utils.js';
+import UserDTO from '../../dto/user.dto.js';
+import { createHash, verifyPassword, createToken, authMiddleware} from '../../utils.js';
 
 const router = Router();
 
@@ -79,6 +79,16 @@ router.post('/auth/login', async (req, res, next) => {
   } catch (error) {
     next(error);
 }
+});
+
+router.get('/auth/current', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res) => {
+  const user = await UserModel.findById(req.user.id);
+  const userDTO = new UserDTO(user);
+  res.status(200).json(userDTO);
+});
+
+router.get('/auth/logout', (req, res) => {
+    res.clearCookie('access_token').redirect('/login');
 });
 
 export default router;
