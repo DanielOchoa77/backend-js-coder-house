@@ -1,5 +1,7 @@
 import CartsService from '../services/Carts.service.js';
 import ProductsController from './Products.controller.js';
+import TicketsController from './Tickets.controllers.js';
+
 import UserServices from "../services/Users.service.js";
 
 export default class CartsController {
@@ -13,7 +15,7 @@ export default class CartsController {
           message: "Cart found",
           status: "Success",
           statusCode: 200
-        };
+        };  
       } else {
         return {
           message: "Carts not Found",
@@ -39,7 +41,6 @@ export default class CartsController {
       const cart = await CartsService.create(data);
       console.log(`Cart was created successfully (${cart._id}).`);
       if (cart) {
-        console.log(cart);
         await UserServices.updateByIdPush(userid, cart._id);
         return {
           cart: cart,
@@ -270,7 +271,6 @@ export default class CartsController {
     const { cid } = req.params;
     const email = req.user.email;
     const cartList = req.user.cartId;
-    console.log(cartList);
     const cartFind = cartList.find((card) => card.cartId === cid);
     if (!cartFind) {
       return {
@@ -279,15 +279,14 @@ export default class CartsController {
         statusCode: 200
       };
     }
-    const cart = await CartsService.getById(cid);
+    const cart = await CartsService.findById(cid);
     const productsListCart = cart.products;
 
 
-    for (const prod in productsListCart) {
-      let product = await ProductsController.getById(prod.product);
-
+    for (const prod of productsListCart) {
+      let {product} = await ProductsController.getById(prod.product);
       if (prod.quantity <= product.stock) {
-        product.stock = product.stock - e.quantity;
+        product.stock = product.stock - prod.quantity;
         let productStok = {
           id: prod.product,
           price: product.price,
@@ -300,7 +299,7 @@ export default class CartsController {
       }
     }
     if (noStokProductList.length > 0) {
-      await CartsService.updateByIdSet(cid, { products: noStokProduct });
+      await CartsService.updateByIdSet(cid, { products: noStokProductList });
       result.productosSinStock = noStokProductList;
     } else {
       await CartsService.updateByIdSet(cid, { products: [] });
@@ -314,9 +313,9 @@ export default class CartsController {
         purchaser_datetime: new Date()
       }
       const ticket = await TicketsController.create(saveTicket);
-      result.infoTicket = ticket;
+      result.ticket = ticket;
 
     }
-    return responseTicket;
+    return result;
   }
 }

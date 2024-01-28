@@ -72,6 +72,7 @@ export const createToken = (user) => {
     last_name,
     email,
     role,
+    cartId
   } = user;
 
   const payload = {
@@ -80,6 +81,7 @@ export const createToken = (user) => {
     last_name,
     email,
     role,
+    cartId
   };
 
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '30m' });

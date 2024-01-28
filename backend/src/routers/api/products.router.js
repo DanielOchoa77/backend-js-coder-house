@@ -26,7 +26,6 @@ router.get('/products', passport.authenticate('jwt', { session: false }), async 
         if (search) {
             criteria.category = search;
         }
-        console.log(criteria);
         const result = await ProductsController.get(criteria, options);
         res.status(result.statusCode).json(result.products ? buildResponsePaginated({ ...result.products, sort, search }) : result);
     } catch (error) {

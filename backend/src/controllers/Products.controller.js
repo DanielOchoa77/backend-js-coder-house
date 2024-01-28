@@ -126,7 +126,6 @@ export default class ProductsController {
     try {
       const productUpdated = await ProductsService.updateById(id, data);
       console.log(`Product successfully updated (${id}).`);
-      console.log(productUpdated);
       if (productUpdated && productUpdated.modifiedCount > 0) {
         return {
           message: "Product successfully updated",

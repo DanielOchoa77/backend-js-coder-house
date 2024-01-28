@@ -80,7 +80,6 @@ router.delete('/carts/:cid/', passport.authenticate('jwt', { session: false }), 
 
 router.post('/carts/:cid/purchaser', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res, next) => {
     try {
-        console.log(req);
         const ticket = await CartsController.executePurchase(req);
         res.status(200).json(ticket);
     } catch (error) {
