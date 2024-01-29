@@ -2,6 +2,7 @@ import path from 'path';
 import bcrypt from 'bcrypt';
 import url from 'url';
 import jwt from 'jsonwebtoken';
+import { faker } from '@faker-js/faker';
 
 const __filename = url.fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
@@ -107,4 +108,19 @@ export const authMiddleware = roles => (req, res, next) => {
     return res.status(403).json({ message: 'forbidden' });
   }
   next();
+};
+
+
+export const generateProduct = () => {
+  return {
+    id: faker.database.mongodbObjectId(),
+    title: faker.commerce.productName(),
+    description: faker.lorem.paragraph(),
+    price: faker.commerce.price(),
+    thumbnail: faker.image.url(),
+    code: faker.string.alphanumeric({ length: 10 }),
+    status: faker.datatype.boolean(),
+    stock: faker.number.int({ min: 10000, max: 99999 }),
+    category:faker.commerce.productMaterial(),
+  }
 };

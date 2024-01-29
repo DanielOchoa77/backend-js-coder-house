@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 import ProductsController from '../../controllers/Products.controller.js';
 import CartsController from '../../controllers/Carts.controller.js';
-import { buildResponsePaginatedHome } from '../../utils.js';
+import { buildResponsePaginatedHome, generateProduct } from '../../utils.js';
 import UserModel from '../../dao/models/user.model.js';
 import passport from 'passport';
 
@@ -50,5 +50,12 @@ router.get('/carts/:cid', passport.authenticate('jwt', { session: false }), asyn
     res.render('carts', { cart: cid, result: result.product.map((prod) => prod.toJSON()) });
 });
 
+router.get('/api/mokingproducts', (req, res) => {
+    const products = [];
+    for (let index = 0; index < 100; index++) {
+      products.push(generateProduct());
+    }
+    res.status(200).json(products);
+  });
 
 export default router;
