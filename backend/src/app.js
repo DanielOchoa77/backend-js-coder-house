@@ -17,6 +17,7 @@ import authRouter from './routers/api/auth.router.js';
 import sessionsRouter from './routers/views/sessions.router.js';
 import passport from 'passport';
 import { init as initPassport } from './config/passport.config.js';
+import { addLogger } from './config/logger.js';
 
 
 const app = express();
@@ -41,6 +42,8 @@ const corsOptions = {
   methods: ['GET','POST','PUT', 'DELETE'],
   credentials: true,
 };
+
+app.use(addLogger);
 app.use(cors(corsOptions));
 app.use(cookieParser(COOKIE_SECRET));
 app.use(express.json());

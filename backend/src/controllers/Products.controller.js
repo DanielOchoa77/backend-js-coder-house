@@ -1,4 +1,5 @@
 import ProductsService from '../services/Products.service.js';
+import { logger } from '../config/logger.js'
 
 export default class ProductsController {
 
@@ -21,7 +22,7 @@ export default class ProductsController {
       }
 
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error find products",
         status: "Error",
@@ -76,7 +77,7 @@ export default class ProductsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error find product",
         status: "Error",
@@ -96,7 +97,7 @@ export default class ProductsController {
         };
       } else {
         const product = await ProductsService.create(data);
-        console.log(`Product is created successfully (${product._id}).`);
+        logger.info(`Product is created successfully (${product._id}).`);
         if (product) {
           return {
             product: product,
@@ -113,7 +114,7 @@ export default class ProductsController {
         }
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: error.message,
         status: "Error",
@@ -125,7 +126,7 @@ export default class ProductsController {
   static async updateById(id, data) {
     try {
       const productUpdated = await ProductsService.updateById(id, data);
-      console.log(`Product successfully updated (${id}).`);
+      logger.info(`Product successfully updated (${id}).`);
       if (productUpdated && productUpdated.modifiedCount > 0) {
         return {
           message: "Product successfully updated",
@@ -140,7 +141,7 @@ export default class ProductsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: error.message,
         status: "Error",
@@ -152,7 +153,7 @@ export default class ProductsController {
   static async deleteById(id) {
     try {
       const productDeleteded = await ProductsService.deleteById({ _id: id });
-      console.log(`Product successfully deleteded (${id}).`);
+      logger.info(`Product successfully deleteded (${id}).`);
       if (productDeleteded && productDeleteded.deletedCount > 0) {
         return {
           message: "Product successfully deleteded",
@@ -167,7 +168,7 @@ export default class ProductsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: error.message,
         status: "Error",

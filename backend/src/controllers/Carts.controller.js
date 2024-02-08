@@ -1,7 +1,7 @@
 import CartsService from '../services/Carts.service.js';
 import ProductsController from './Products.controller.js';
 import TicketsController from './Tickets.controllers.js';
-
+import { logger } from '../config/logger.js'
 import UserServices from "../services/Users.service.js";
 
 export default class CartsController {
@@ -24,7 +24,7 @@ export default class CartsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error find Carts",
         status: "Error",
@@ -39,7 +39,7 @@ export default class CartsController {
         products: []
       }
       const cart = await CartsService.create(data);
-      console.log(`Cart was created successfully (${cart._id}).`);
+      logger.info(`Cart was created successfully (${cart._id}).`);
       if (cart) {
         await UserServices.updateByIdPush(userid, cart._id);
         return {
@@ -50,7 +50,7 @@ export default class CartsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: error.message,
         status: "Error",
@@ -77,7 +77,7 @@ export default class CartsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error find Cart",
         status: "Error",
@@ -136,7 +136,7 @@ export default class CartsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error add product to cart",
         status: "Error",
@@ -175,7 +175,7 @@ export default class CartsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error find Cart",
         status: "Error",
@@ -194,7 +194,7 @@ export default class CartsController {
         statusCode: 200
       };
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error add product to cart",
         status: "Error",
@@ -236,7 +236,7 @@ export default class CartsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error add product to cart",
         status: "Error",
@@ -255,7 +255,7 @@ export default class CartsController {
         statusCode: 200
       };
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error add product to cart",
         status: "Error",

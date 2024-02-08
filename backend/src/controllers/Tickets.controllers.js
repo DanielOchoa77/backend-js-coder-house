@@ -1,5 +1,6 @@
 import TicketsServices from "../services/Tickets.service.js";
 import { v4 as uuidV4 } from "uuid";
+import { logger } from '../config/logger.js'
 
 export default class TicketsController {
 
@@ -27,7 +28,7 @@ export default class TicketsController {
 
       return await TicketsServices.create(ticket);
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: error.message,
         status: "Error",

@@ -19,7 +19,7 @@ export const init = (httpServer) => {
   io = new Server(httpServer);
 
   io.on('connection', (socketClient) => {
-    console.log("cliente conectado : "+ socketClient.id);
+    logger.info("cliente conectado : "+ socketClient.id);
     socketClient.emit('update-product', productList);
     
     socketClient.emit('update-conversation', conversation);

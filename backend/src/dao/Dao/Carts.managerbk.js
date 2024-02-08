@@ -21,7 +21,7 @@ export default class CartsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error find Carts",
         status: "Error",
@@ -36,7 +36,7 @@ export default class CartsController {
         products: []
       }
       const cart = await CartModel.create(data);
-      console.log(`Cart was created successfully (${cart._id}).`);
+      logger.info(`Cart was created successfully (${cart._id}).`);
       if (cart) {
         return {
           cart: cart,
@@ -46,7 +46,7 @@ export default class CartsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: error.message,
         status: "Error",
@@ -73,7 +73,7 @@ export default class CartsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error find Cart",
         status: "Error",
@@ -134,7 +134,7 @@ export default class CartsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error add product to cart",
         status: "Error",
@@ -175,7 +175,7 @@ export default class CartsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error find Cart",
         status: "Error",
@@ -194,7 +194,7 @@ export default class CartsController {
         statusCode: 200
       };
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error add product to cart",
         status: "Error",
@@ -238,7 +238,7 @@ export default class CartsController {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error add product to cart",
         status: "Error",
@@ -257,7 +257,7 @@ export default class CartsController {
         statusCode: 200
       };
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error add product to cart",
         status: "Error",

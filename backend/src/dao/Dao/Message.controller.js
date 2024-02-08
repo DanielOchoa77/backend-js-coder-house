@@ -1,4 +1,5 @@
 import MessageModel from '../models/message.model.js';
+import { logger } from '../../config/logger.js'
 
 export default class MessageManagers {
   static async get() {
@@ -20,7 +21,7 @@ export default class MessageManagers {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: "Error find Messages",
         status: "Error",
@@ -37,7 +38,7 @@ export default class MessageManagers {
         message: message
       }
       const messageResult = await MessageModel.create(messageBody);
-      console.log("message was created successfully");
+      logger.info("message was created successfully");
       if (messageResult) {
         return {
           message: messageResult,
@@ -47,7 +48,7 @@ export default class MessageManagers {
         };
       }
     } catch (error) {
-      console.log(error.message);
+      logger.error(error.message);
       return {
         message: error.message,
         status: "Error",
