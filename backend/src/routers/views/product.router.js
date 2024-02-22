@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 import ProductsController from '../../controllers/Products.controller.js';
 import CartsController from '../../controllers/Carts.controller.js';
-import { buildResponsePaginatedHome, generateProduct } from '../../utils.js';
+import { buildResponsePaginatedHome, generateProduct } from '../../utils/utils.js';
 import UserModel from '../../dao/models/user.model.js';
 import passport from 'passport';
 

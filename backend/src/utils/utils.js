@@ -1,12 +1,13 @@
-import path from 'path';
+import path, {join} from 'path';
 import bcrypt from 'bcrypt';
 import url from 'url';
 import jwt from 'jsonwebtoken';
 import { faker } from '@faker-js/faker';
-import config from './config/config.js';
+import config from '../config/config.js';
 
 const __filename = url.fileURLToPath(import.meta.url);
-export const __dirname = path.dirname(__filename);
+export const baseDir = path.dirname(__filename);
+export const __dirname = join(baseDir, '..');
 
 export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
@@ -97,7 +98,7 @@ export const createTokenRecovery = (email) => {
     emailRecover:email
   };
 
-  return jwt.sign(payload, JWT_SECRET_RECOVERY, { expiresIn: '10m' });
+  return jwt.sign(payload, JWT_SECRET_RECOVERY, { expiresIn: '60m' });
 }
 
 export const verifyToken = (token) => {

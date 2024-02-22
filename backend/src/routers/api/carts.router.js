@@ -1,7 +1,7 @@
 import e, { Router } from 'express';
 import CartsController from '../../controllers/Carts.controller.js';
 import passport from 'passport';
-import { authMiddleware } from '../../utils.js';
+import { authMiddleware } from '../../utils/utils.js';
 const router = Router();
 
 router.post('/carts', passport.authenticate('jwt', { session: false }), authMiddleware('user'), async (req, res, next) => {

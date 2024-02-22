@@ -4,7 +4,7 @@ import { ProductManagers } from '../../dao/Dao/ProductManager.js';
 const prodManager = new ProductManagers("./src/products.json");
 import EmailService from '../../services/email.service.js';
 import path from 'path';
-import { __dirname } from '../../utils.js';
+import { __dirname } from '../../utils/utils.js';
     
 router.get('/', async (req, res) => {
     res.render('login', { title: 'Hello People 🖐️' });

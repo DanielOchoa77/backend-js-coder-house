@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import MessageManager from '../../dao/Dao/Message.controller.js';
 import { newMessageFromAPI } from '../../socket.js';
-import { authMiddleware } from "../../utils.js";
+import { authMiddleware } from "../../utils/utils.js";
 
 const router = Router();
 

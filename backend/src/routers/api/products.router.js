@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import ProductsController from '../../controllers/Products.controller.js';
-import { buildResponsePaginated, authMiddleware } from '../../utils.js';
+import { buildResponsePaginated, authMiddleware } from '../../utils/utils.js';
 import passport from 'passport';
 const router = Router();
 

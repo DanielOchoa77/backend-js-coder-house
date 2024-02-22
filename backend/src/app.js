@@ -7,7 +7,7 @@ import messageRouter from './routers/views/message.router.js';
 import cors from 'cors';
 import handlebars from 'express-handlebars';
 import path from 'path';
-import { __dirname } from './utils.js';
+import { __dirname } from './utils/utils.js';
 //import { URI } from './db/mongodb.js';
 import cookieParser from 'cookie-parser';
 //import sessions from 'express-session';
@@ -18,6 +18,7 @@ import sessionsRouter from './routers/views/sessions.router.js';
 import passport from 'passport';
 import { init as initPassport } from './config/passport.config.js';
 import { addLogger } from './config/logger.js';
+import { errorHandlerMiddleware } from "./middlewares/error-handler.middleware.js";
 
 
 const app = express();
@@ -63,6 +64,7 @@ app.use('/', prodRouterview, homeRouterview);
 app.use('/chat', messageRouter);
 app.use('/api', productRouter, cartRouter, usersRouter, authRouter, sessionsRouter);
 
+app.use(errorHandlerMiddleware);
 app.use((error, req, res, next) => {
   const message = `Ah ocurrido un error desconocido 😨: ${error.message}`;
   console.error(message);
