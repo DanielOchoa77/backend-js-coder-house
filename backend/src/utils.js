@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import url from 'url';
 import jwt from 'jsonwebtoken';
 import { faker } from '@faker-js/faker';
+import config from './config/config.js';
 
 const __filename = url.fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
@@ -11,6 +12,7 @@ export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSy
 
 export const isValidPassword = (password, user) => bcrypt.compareSync(password, user.password);
 export const verifyPassword = (password, user) => bcrypt.compareSync(password, user.password);
+
 
 export const URL_BASE = 'http://localhost:8080/api';
 
@@ -64,7 +66,8 @@ export const buildResponsePaginated = (data, baseUrl = URL_BASE) => {
     };  
   };
 
-  export const JWT_SECRET = ':9p.6b;kux)w4V7/]flg79#}35mG9Z';
+  export const JWT_SECRET = config.jwtSecret;
+  export const JWT_SECRET_RECOVERY = config.jwtSecretRecovery;
 
 export const createToken = (user) => {
   const {
@@ -88,9 +91,29 @@ export const createToken = (user) => {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '30m' });
 }
 
+export const createTokenRecovery = (email) => {
+
+  const payload = {
+    emailRecover:email
+  };
+
+  return jwt.sign(payload, JWT_SECRET_RECOVERY, { expiresIn: '10m' });
+}
+
 export const verifyToken = (token) => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, JWT_SECRET, (error, payload)  => {
+      if (error) {
+        return reject(error);
+      }
+      resolve(payload);
+    });
+  });
+}
+
+export const verifyTokenRecovery = (token) => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, JWT_SECRET_RECOVERY, (error, payload)  => {
       if (error) {
         return reject(error);
       }
@@ -123,4 +146,17 @@ export const generateProduct = () => {
     stock: faker.number.int({ min: 10000, max: 99999 }),
     category:faker.commerce.productMaterial(),
   }
+};
+
+export const authMiddlewareRecovery = (strategy) => (req, res, next) => {
+  passport.authenticate(strategy, function (error, payload, info) {
+    if (error) {
+      return next(error);
+    }
+    if (!payload) {
+      return res.status(401).json({ message: info.message ? info.message : info.toString() });
+    }
+    req.user = payload;
+    next();
+  })(req, res, next);
 };

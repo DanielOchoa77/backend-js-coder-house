@@ -10,4 +10,14 @@ export default class AuthService {
         return  UserDao.findOne({ email });
     }
 
+    static async getByEmail(email) {
+        return  UserDao.findOne({ email });
+    }
+    static async updateById(uid, data) {
+        return UserDao.updateById(uid, data);
+    }
+
+    static async updateOne(field, data) {
+        return UserDao.updateOne(field, data);
+    }
 }
