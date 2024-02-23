@@ -86,48 +86,54 @@ export default class CartsController {
     }
   }
 
-  static async addProductToCart(cid, pid, body) {
+  static async addProductToCart(cid, pid, body, user) {
     try {
       const productExist = await ProductsController.getById(pid);
       if (productExist.product) {
-        const { quantity } = body;
-        const cartExists = await CartsService.findById(cid);
-        if (cartExists) {
-          const productExistInCart = await CartsService.findByIdAndProductId(cid, pid);
-          if (productExistInCart && productExistInCart.length > 0) {
-            cartExists.products.forEach(prod => {
-              if (prod.product.toString() === pid) {
-                prod.quantity += quantity;
+        if(user.role === "user" ||(user.role === 'premium' && (user.id != productExist.product.owner))){
+          const { quantity } = body;
+          const cartExists = await CartsService.findById(cid);
+          if (cartExists) {
+            const productExistInCart = await CartsService.findByIdAndProductId(cid, pid);
+            if (productExistInCart && productExistInCart.length > 0) {
+              cartExists.products.forEach(prod => {
+                if (prod.product.toString() === pid) {
+                  prod.quantity += quantity;
+                }
+              });
+              const updateProd = { 'products': cartExists.products };
+              const updateQuantity = await CartsService.updateByIdSet(cid, updateProd);
+              return {
+                cart: updateQuantity,
+                message: "Product is updated successfully",
+                status: "Success",
+                statusCode: 200
+              };
+            } else {
+              const productNew = {
+                product: pid,
+                quantity: quantity
               }
-            });
-            const updateProd = { 'products': cartExists.products };
-            const updateQuantity = await CartsService.updateByIdSet(cid, updateProd);
-            return {
-              cart: updateQuantity,
-              message: "Product is updated successfully",
-              status: "Success",
-              statusCode: 200
-            };
-          } else {
-            const productNew = {
-              product: pid,
-              quantity: quantity
+              const updateQuantity = await CartsService.updateByIdPush(cid, { products: productNew });
+              return {
+                cart: updateQuantity,
+                message: "Product is added successfully",
+                status: "Success",
+                statusCode: 200
+              };
             }
-            const updateQuantity = await CartsService.updateByIdPush(cid, { products: productNew });
+          } else {
             return {
-              cart: updateQuantity,
-              message: "Product is added successfully",
-              status: "Success",
-              statusCode: 200
+              message: "Cart not Found",
+              status: "Error",
+              statusCode: 404
             };
           }
-        } else {
-          return {
-            message: "Cart not Found",
-            status: "Error",
-            statusCode: 404
-          };
-        }
+        } return {
+          message: "No se puede agregar al carrito un producto del cual es propietario ",
+          status: "Error",
+          statusCode: 400
+        };
       } else {
         return {
           message: "Product not Found",

@@ -29,5 +29,9 @@ export default class UserService {
     static async updateByIdPush(uid, cid) {
         return await usersRepository.updateByIdPush( uid , cid );
     }
+
+    static async getUserById(id) {
+        return await usersRepository.getUserById(id);
+    }
    
 }

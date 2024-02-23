@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import UserModel from '../../dao/models/user.model.js';
+import UsersController from '../../controllers/Users.controller.js';
+import { authMiddleware } from '../../utils/utils.js';
+import passport from 'passport';
 
 const router = Router();
 
@@ -54,5 +57,16 @@ router.delete('/users/:uid', async (req, res, next) => {
     next(error);
   }
 });
+
+router.put('/users/premium/:uid', passport.authenticate('jwt', { session: false }), authMiddleware('admin'), async (req, res, next) => {
+  try {
+    const { uid } = req.params;
+    const result = await UsersController.changeRole(uid);
+    res.status(result.statusCode).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 export default router;

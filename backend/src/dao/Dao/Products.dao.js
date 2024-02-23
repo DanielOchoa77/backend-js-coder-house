@@ -15,14 +15,14 @@ export default class ProductsDaoMongoDB {
     }
 
      findOne(code) {
-        return  ProductModel.findOne(code);
+        return  ProductModel.findOne({ 'code': code });
     }
 
      updateById(tid, data) {
-        return CartModel.updateOne({ _id: tid }, { $set: data });
+        return ProductModel.updateOne({ _id: tid }, { $set: data });
     }
 
      deleteById(tid) {
-        return CartModel.deleteOne({ _id: tid });
+        return ProductModel.deleteOne({ _id: tid });
     }
 }

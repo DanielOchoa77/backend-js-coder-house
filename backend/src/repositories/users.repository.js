@@ -14,7 +14,7 @@ export default class UserRepository{
         return this.dao.create(data);
     }
 
-    async  getById(id) {
+    async getById(id) {
         const result = await this.dao.getAll({ _id: id });
         return result[0];
     }
@@ -29,6 +29,10 @@ export default class UserRepository{
 
     async updateByIdPush(uid, cid) {
         return await this.dao.updateByIdPush({ _id: uid }, { $push: { cartId:{'cartId' : cid}  } });
+    }
+
+    async  getUserById(id) {
+        return await this.dao.findById(id);
     }
 }
 

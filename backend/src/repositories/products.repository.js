@@ -16,7 +16,7 @@ export default class ProductRepository {
     }
 
     async findByCode(code) {
-        return this.dao.findOne({ 'code': code });
+        return this.dao.findOne(code);
     }
 
     async updateById(tid, data) {

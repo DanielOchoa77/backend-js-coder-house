@@ -30,4 +30,8 @@ export default class UsersDaoMongoDB {
         return UserModel.deleteOne({ _id: uid });
     }
 
+    findById(uid) {
+        return UserModel.findById(uid);
+    }
+
 }

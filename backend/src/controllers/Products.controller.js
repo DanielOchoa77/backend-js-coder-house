@@ -86,8 +86,9 @@ export default class ProductsController {
     }
   }
 
-  static async create(data) {
+  static async create(data,user) {
     try {
+      console.log(data.code);
       const findProductByCode = await ProductsService.findByCode(data.code);
       if (findProductByCode) {
         return {
@@ -96,6 +97,8 @@ export default class ProductsController {
           statusCode: 404
         };
       } else {
+        data.owner = user.role === 'premium' ? user.id:'admin';
+        
         const product = await ProductsService.create(data);
         logger.info(`Product is created successfully (${product._id}).`);
         if (product) {
@@ -150,19 +153,34 @@ export default class ProductsController {
     }
   }
 
-  static async deleteById(id) {
+  static async deleteById(id,user) {
     try {
-      const productDeleteded = await ProductsService.deleteById({ _id: id });
-      logger.info(`Product successfully deleteded (${id}).`);
-      if (productDeleteded && productDeleteded.deletedCount > 0) {
-        return {
-          message: "Product successfully deleteded",
-          status: "Success",
-          statusCode: 200
+      const product = await ProductsService.findById(id);
+      if (product) {
+        if(user.role === "admin" || (user.role === 'premium' && product.owner === user.id)){
+          const productDeleteded = await ProductsService.deleteById({ _id: id });
+          logger.info(`Product successfully deleteded (${id}).`);
+          if (productDeleteded && productDeleteded.deletedCount > 0) {
+            return {
+              message: "Product successfully deleteded",
+              status: "Success",
+              statusCode: 200
+            };
+          } else {
+            return {
+              message: "Product not deleteded",
+              status: "Error",
+              statusCode: 404
+            };
+          }
+        } return {
+          message: "No se puede eliminar un producto del cual no es propietario ",
+          status: "Error",
+          statusCode: 400
         };
       } else {
         return {
-          message: "Product not deleteded",
+          message: "Product not Found",
           status: "Error",
           statusCode: 404
         };

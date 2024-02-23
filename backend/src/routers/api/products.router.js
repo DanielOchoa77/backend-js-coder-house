@@ -54,20 +54,21 @@ router.put('/products/:pid', passport.authenticate('jwt', { session: false }), a
     }
 });
 
-router.post('/products', passport.authenticate('jwt', { session: false }), authMiddleware('admin'), async (req, res, next) => {
+router.post('/products', passport.authenticate('jwt', { session: false }), authMiddleware(['user','premium']), async (req, res, next) => {
     try {
-        const { body } = req;
-        const result = await ProductsController.create(body);
+        const { body, user } = req;
+        const result = await ProductsController.create(body,user);
         res.status(result.statusCode).json(result.product ? result.product : result);
     } catch (error) {
         next(error);
     }
 });
 
-router.delete('/products/:pid', passport.authenticate('jwt', { session: false }), authMiddleware('admin'), async (req, res) => {
+router.delete('/products/:pid', passport.authenticate('jwt', { session: false }), authMiddleware(['admin','premium']), async (req, res) => {
     try {
         const pid = req.params.pid;
-        const result = await ProductsController.deleteById(pid);
+        const {user} = req;
+        const result = await ProductsController.deleteById(pid,user);
         res.status(result.statusCode).json(result.product ? result.product : result);
     } catch (error) {
         next(error);

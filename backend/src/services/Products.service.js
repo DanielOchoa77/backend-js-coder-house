@@ -15,7 +15,7 @@ export default class ProductsService {
     }
 
     static async findByCode(code) {
-        return productsRepository.findOne({ 'code': code });
+        return productsRepository.findByCode(code);
     }
 
     static async updateById(tid, data) {

@@ -264,3 +264,55 @@ info: Database connected succesfuly 🚀
 info: Server running on http://localhost:8080 🚀
 info: Database connected succesfuly 🚀
 info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+error: productsRepository.findOne is not a function
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+error: Cast to string failed for value "{ code: 'abc16' }" (type Object) at path "code" for model "Product"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+error: Cast to string failed for value "{ code: 'abc16' }" (type Object) at path "code" for model "Product"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+error: Cast to string failed for value "{ code: 'abc16' }" (type Object) at path "code" for model "Product"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+error: Cast to string failed for value "{ code: 'abc16' }" (type Object) at path "code" for model "Product"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65d82c10fd36ef128dd9a1c9).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Cart was created successfully (65d82c5ec50d927ce2f9138d).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65d82f81c1a9b12c43481c4b).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+error: CartModel is not defined
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product successfully deleteded (65d82c10fd36ef128dd9a1c9).
