@@ -19,6 +19,8 @@ import passport from 'passport';
 import { init as initPassport } from './config/passport.config.js';
 import { addLogger } from './config/logger.js';
 import { errorHandlerMiddleware } from "./middlewares/error-handler.middleware.js";
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 
 
 const app = express();
@@ -59,6 +61,22 @@ initPassport();
 app.use(passport.initialize());
 //app.use(passport.session());
 
+if (process.env.NODE_ENV == 'production') {
+  console.log(process.env.NODE_ENV);
+  const swaggerOpts = {
+    definition: {
+      openapi: '3.0.0',
+      info: {
+        title: 'Ventas API',
+        description: 'Esta es la documentación de la API de D.O. Una aplicación de ventas de tenis.',
+      },
+    },
+    apis: [path.join(__dirname, 'docs', '**', '*.yaml')],
+  };
+  console.log(path.join(__dirname, 'docs', '**', '*.yaml'));
+  const specs = swaggerJsDoc(swaggerOpts);
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+}
 
 app.use('/', prodRouterview, homeRouterview);
 app.use('/chat', messageRouter);
