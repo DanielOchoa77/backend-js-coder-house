@@ -1,0 +1,201 @@
+paths:
+  /api/carts:
+    post:
+      summary: Crear un carrito
+      tags:
+        - Carts
+      responses:
+        201:
+          description: Carrito creado exitosamente.
+          content:
+            application/json:
+              schema:
+                properties:
+                  cart:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/createCart"
+                  message:
+                    type: string
+                    description: mensaje de la respuesta
+                    example: Cart was created successfully
+                  status:
+                    type: string
+                    description: Estado de la respuesta
+                    example: success
+                  statusCode:
+                    type: string
+                    description: Estado de la respuesta
+                    example: 201
+        500:
+          description: Error interno del servidor.
+
+/api/carts/{cid}:
+  get:
+    summary: Obtiene un carrito por su ID
+    tags:
+      - Carts
+    parameters:
+      - in: path
+        name: cid
+        required: true
+        description: ID del carrito
+        schema:
+          type: string
+    responses:
+      200:
+        description: Carrito obtenido
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                      $ref: "#/components/schemas/product"
+                  quantity:
+                    type: number
+                    description: cantidad de productos
+                    example: 5
+      404:
+        description: Carrito no encontrado
+      500:
+        description: Error interno del servidor
+  delete:
+      summary: Eliminar un carrito por identificador
+      tags:
+        - Carts
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          description: Identificador del carrito a modificar.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Producto Eliminado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cart:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/cart"
+                  message:
+                    type: string
+                    description: Mesaje de confirmación.
+                    example:  Product is deleteded successfully
+                  status:
+                    type: string
+                    description: status
+                    example: Success
+                  statusCode:
+                    type: number
+                    description: statusCode.
+                    example: 200
+        400:
+          description: Error en los datos enviados
+        500:
+          description: Error interno del servidor
+
+/carts/{cid}/product/{pid}:
+  post:
+    summary: Adicionar un producto al carrito
+    tags:
+      - Carts
+    parameters:
+      - in: path
+        name: cid
+        required: true
+        description: ID del carrito
+        schema:
+          type: string
+      - in: path
+        name: pid
+        required: true
+        description: ID de la producto
+        schema:
+          type: string
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/requestBodies/saveProducts"
+    responses:
+      200:
+        description: Producto agregado
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cart:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/cart"
+                message:
+                  type: string
+                  description: Mesaje de confirmación.
+                  example: Product is added successfully
+                status:
+                  type: string
+                  description: status
+                  example: Success
+                statusCode:
+                  type: number
+                  description: statusCode.
+                  example: 200
+      400:
+        description: Error en los datos enviados
+      500:
+        description: Error interno del servidor
+
+components:
+  schemas:
+    createCart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Identificador del producto en la base de datos.
+        products:
+          type: array
+          description: Titulo del producto.
+      example:
+        products: []
+        _id: "65584b8b9133776f26fe51e4"
+        createdAt: "2023-11-18T05:28:43.018Z"
+        updatedAt: "2023-11-30T03:03:06.001Z"
+    cart:
+      type: object
+      properties:
+        acknowledged:
+          type: boolean
+        modifiedCount:
+          type: number
+        upsertedId:
+          type: string
+        upsertedCount:
+          type: number
+        matchedCount:
+          type: number
+      example:
+        acknowledged: true
+        modifiedCount: 1
+        upsertedId: null
+        upsertedCount: 0
+        matchedCount: 1
+  requestBodies:
+    saveProducts:
+      type: object
+      properties:
+        quantity:
+          type: string
+          description: Cantidad del producto.
+      example:
+        quantity: 12
