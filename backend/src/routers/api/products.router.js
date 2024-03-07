@@ -54,7 +54,7 @@ router.put('/products/:pid', passport.authenticate('jwt', { session: false }), a
     }
 });
 
-router.post('/products', passport.authenticate('jwt', { session: false }), authMiddleware(['user','premium']), async (req, res, next) => {
+router.post('/products', passport.authenticate('jwt', { session: false }), authMiddleware(['user','premium','admin']), async (req, res, next) => {
     try {
         const { body, user } = req;
         const result = await ProductsController.create(body,user);
