@@ -8,6 +8,7 @@ describe('EcommerceTesting', function () {
     this.cookie = {};
     this.email = '';
     this.idProduct = '';
+    this.idCart = '';
   });
   describe('Auth Testing', function () {
     it('deberia crear el usuario de forma exitosa.', async function () {
@@ -110,7 +111,7 @@ describe('EcommerceTesting', function () {
         description: "Este es un producto prueba premium 2",
         price: 300,
         thumbnail: "Sin imagen",
-        code:`abc${Date.now() / 1000}`,
+        code: `abc${Date.now() / 1000}`,
         stock: 25,
         status: true,
         category: "Zapatillas"
@@ -139,8 +140,123 @@ describe('EcommerceTesting', function () {
         .set('Cookie', [`${this.cookie.key}=${this.cookie.value}`]);
       expect(statusCode).to.be.equal(200);
       expect(ok).to.be.ok;
-      //expect(_body).to.be.has.property('_id', _id);
+      expect(_body).to.be.has.property('_id', _id);
     });
 
+    it('deberia fallar al consultar el producto por id erroneo', async function () {
+      const _id = this.idProduct;
+      const {
+        statusCode,
+        ok,
+        _body,
+      } = await requester
+        .get(`/api/products/${_id}w`)
+        .set('Cookie', [`${this.cookie.key}=${this.cookie.value}`]);
+        expect(statusCode).to.be.equal(400);
+        expect(ok).to.be.not.ok;
+        expect(_body).to.be.has.property("message", 'Error find product');
+        expect(_body).to.be.has.property('status', 'Error');
+    });
+
+  });
+  describe('Cart Testing', function () {
+    it('deberia crear el producto de forma exitosa', async function () {
+
+      const productMock = {
+        title: "producto prueba premium 3",
+        description: "Este es un producto prueba premium 2",
+        price: 300,
+        thumbnail: "Sin imagen",
+        code: `abc${Date.now() / 1000}`,
+        stock: 25,
+        status: true,
+        category: "Zapatillas"
+      };
+      const {
+        statusCode,
+        ok,
+        _body,
+      } = await requester.post('/api/products').send(productMock)
+        .set('Cookie', [`${this.cookie.key}=${this.cookie.value}`]);
+      expect(statusCode).to.be.equal(200);
+      expect(ok).to.be.ok;
+      expect(_body).to.be.has.property('_id');
+
+      this.idProduct = _body._id;
+    });
+    it('deberia crear el carrito de forma exitosa', async function () {
+      const {
+        statusCode,
+        ok,
+        _body,
+      } = await requester
+        .post('/api/carts')
+        .set('Cookie', [`${this.cookie.key}=${this.cookie.value}`]);
+      expect(statusCode).to.be.equal(201);
+      expect(ok).to.be.ok;
+      expect(_body).to.be.has.property('status', 'Success');
+      expect(_body).to.be.has.property('cart');
+      expect(_body.cart).to.be.has.property('_id');
+      expect(_body).to.be.has.property('message', 'Cart was created successfully');
+      this.idCart = _body.cart._id;
+
+    });
+
+    it('deberia obtener la lista vacia de los productos por id del carrito', async function () {
+      const {
+        statusCode,
+        ok,
+        _body,
+      } = await requester
+        .get(`/api/carts/${this.idCart}`)
+        .set('Cookie', [`${this.cookie.key}=${this.cookie.value}`]);
+      expect(statusCode).to.be.equal(200);
+      expect(ok).to.be.ok;
+      expect(_body).to.deep.equal([]);
+    });
+
+    it('deberia agregar el producto al carrito de forma exitosa', async function () {
+      const productAddMock = {
+        quantity: 2,
+      };
+      const {
+        statusCode,
+        ok,
+        _body,
+      } = await requester.post(`/api/carts/${this.idCart}/product/${this.idProduct}`).send(productAddMock)
+        .set('Cookie', [`${this.cookie.key}=${this.cookie.value}`]);
+      expect(statusCode).to.be.equal(200);
+      expect(ok).to.be.ok;
+      expect(_body).to.be.has.property('cart');
+      expect(_body).to.be.has.property("message", 'Product is added successfully');
+      expect(_body).to.be.has.property('status', 'Success');
+    });
+
+    it('deberia obtener la lista llena de los productos por id del carrito', async function () {
+      const {
+        statusCode,
+        ok,
+        _body,
+      } = await requester
+        .get(`/api/carts/${this.idCart}`)
+        .set('Cookie', [`${this.cookie.key}=${this.cookie.value}`]);
+      expect(statusCode).to.be.equal(200);
+      expect(ok).to.be.ok;
+      expect(_body).to.not.equal([]);
+    });
+
+    it('deberia fallar vacia de los productos por id del carrito erroneo', async function () {
+      const {
+        statusCode,
+        ok,
+        _body,
+      } = await requester
+        .get(`/api/carts/${this.idCart}s`)
+        .set('Cookie', [`${this.cookie.key}=${this.cookie.value}`]);
+      expect(statusCode).to.be.equal(400);
+      expect(ok).to.be.not.ok;
+      expect(_body).to.be.has.property("message", 'Error find Cart');
+      expect(_body).to.be.has.property('status', 'Error');
+    });
   });
 });

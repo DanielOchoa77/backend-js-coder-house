@@ -568,3 +568,167 @@ info: Product is created successfully (65e9573e75c333a0383fdd2d).
 info: Database connected succesfuly 🚀
 info: Server running on http://localhost:8080 🚀
 info: Product is created successfully (65e95754b5b6273d737759fc).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65ea90509fad58c8f75f8848).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Cart was created successfully (65ea9957fb9699aee2c2af5f).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+error: Error to connect to database
+info: Server running on http://localhost:8080 🚀
+error: Operation `products.findOne()` buffering timed out after 10000ms
+error: Operation `products.findOne()` buffering timed out after 10000ms
+error: Operation `products.countDocuments()` buffering timed out after 10000ms
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa1fac1e3dd86c3c03976).
+info: Cart was created successfully (65eaa1fac1e3dd86c3c03979).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa23107d647d86a472917).
+info: Cart was created successfully (65eaa23207d647d86a47291a).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa29beca46f51465f9bb6).
+info: Cart was created successfully (65eaa29beca46f51465f9bb9).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa2f2468f32951ec3de01).
+info: Cart was created successfully (65eaa2f3468f32951ec3de04).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa3bb8200320aa879e576).
+info: Cart was created successfully (65eaa3bc8200320aa879e579).
+info: Product is created successfully (65eaa4d18200320aa879e587).
+info: Cart was created successfully (65eaa4d18200320aa879e58a).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa4dfcd0ccadb8337a6a2).
+info: Product is created successfully (65eaa4e0cd0ccadb8337a6a6).
+info: Cart was created successfully (65eaa4e0cd0ccadb8337a6a8).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa5636419056c7f053bed).
+info: Product is created successfully (65eaa5636419056c7f053bf1).
+info: Cart was created successfully (65eaa5646419056c7f053bf3).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa5985a60e26d1c1a0909).
+info: Product is created successfully (65eaa5995a60e26d1c1a090d).
+info: Cart was created successfully (65eaa5995a60e26d1c1a090f).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa5de270bb23681636dc0).
+info: Product is created successfully (65eaa5df270bb23681636dc4).
+info: Cart was created successfully (65eaa5df270bb23681636dc6).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa60c2deda844e9a52c41).
+info: Product is created successfully (65eaa60d2deda844e9a52c45).
+info: Cart was created successfully (65eaa60d2deda844e9a52c47).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa638eb5d868401b2ea13).
+info: Product is created successfully (65eaa638eb5d868401b2ea17).
+info: Cart was created successfully (65eaa638eb5d868401b2ea19).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa65eb81aa94a7a169dc3).
+info: Product is created successfully (65eaa65fb81aa94a7a169dc7).
+info: Cart was created successfully (65eaa65fb81aa94a7a169dc9).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+error: Cast to ObjectId failed for value "65584b8b9133776f26fe51e4s" (type string) at path "_id" for model "Product"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa6e76ed4fc80aed6cee2).
+info: Product is created successfully (65eaa6e76ed4fc80aed6cee6).
+info: Cart was created successfully (65eaa6e76ed4fc80aed6cee8).
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+error: Cast to ObjectId failed for value "65b5b685d6d25cb93a91d27dw" (type string) at path "_id" for model "Cart"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa94add0a644bad6a623b).
+error: Cast to ObjectId failed for value "65eaa94add0a644bad6a623b4" (type string) at path "_id" for model "Product"
+info: Product is created successfully (65eaa94bdd0a644bad6a623f).
+info: Cart was created successfully (65eaa94bdd0a644bad6a6241).
+error: Cast to ObjectId failed for value "65eaa94bdd0a644bad6a6241s" (type string) at path "_id" for model "Cart"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaa9ebfe379af912cf5db1).
+error: Cast to ObjectId failed for value "65eaa9ebfe379af912cf5db1w" (type string) at path "_id" for model "Product"
+info: Product is created successfully (65eaa9ecfe379af912cf5db5).
+info: Cart was created successfully (65eaa9ecfe379af912cf5db7).
+error: Cast to ObjectId failed for value "65eaa9ecfe379af912cf5db7s" (type string) at path "_id" for model "Cart"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaaa3e301eb9a6417cb821).
+error: Cast to ObjectId failed for value "65eaaa3e301eb9a6417cb821w" (type string) at path "_id" for model "Product"
+info: Product is created successfully (65eaaa3e301eb9a6417cb825).
+info: Cart was created successfully (65eaaa3e301eb9a6417cb827).
+error: Cast to ObjectId failed for value "65eaaa3e301eb9a6417cb827s" (type string) at path "_id" for model "Cart"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaaa552c4a320b646724f8).
+error: Cast to ObjectId failed for value "65eaaa552c4a320b646724f8w" (type string) at path "_id" for model "Product"
+info: Product is created successfully (65eaaa552c4a320b646724fc).
+info: Cart was created successfully (65eaaa552c4a320b646724fe).
+error: Cast to ObjectId failed for value "65eaaa552c4a320b646724fes" (type string) at path "_id" for model "Cart"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaaaa85b277fceaad94275).
+error: Cast to ObjectId failed for value "65eaaaa85b277fceaad94275w" (type string) at path "_id" for model "Product"
+info: Product is created successfully (65eaaaa85b277fceaad94279).
+info: Cart was created successfully (65eaaaa85b277fceaad9427b).
+error: Cast to ObjectId failed for value "65eaaaa85b277fceaad9427bs" (type string) at path "_id" for model "Cart"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaaadbc354c7a42ab75894).
+error: Cast to ObjectId failed for value "65eaaadbc354c7a42ab75894w" (type string) at path "_id" for model "Product"
+info: Product is created successfully (65eaaadcc354c7a42ab75898).
+info: Cart was created successfully (65eaaadcc354c7a42ab7589a).
+error: Cast to ObjectId failed for value "65eaaadcc354c7a42ab7589as" (type string) at path "_id" for model "Cart"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Product is created successfully (65eaab3b294b0b68c7210b2b).
+error: Cast to ObjectId failed for value "65eaab3b294b0b68c7210b2bw" (type string) at path "_id" for model "Product"
+info: Product is created successfully (65eaab3c294b0b68c7210b2f).
+info: Cart was created successfully (65eaab3c294b0b68c7210b31).
+error: Cast to ObjectId failed for value "65eaab3c294b0b68c7210b31s" (type string) at path "_id" for model "Cart"
