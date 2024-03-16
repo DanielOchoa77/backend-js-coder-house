@@ -15,6 +15,10 @@ export default class AuthController {
     return AuthService.create(data);
   }
 
+  static async updateById(uid,data) {
+    return AuthService.updateById(uid,data);
+  }
+
   static async recoveryPasswordMail(req) {
     const { body: { email } } = req;
     if (!email) {
@@ -109,7 +113,7 @@ export default class AuthController {
         )
       }
       user.password = createHash(password);
-      return await AuthService.updateById(user.id, user);;
+      return await AuthService.updateById(user.id, user);
     } else {
       CustomError.create(
         {

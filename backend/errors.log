@@ -732,3 +732,21 @@ error: Cast to ObjectId failed for value "65eaab3b294b0b68c7210b2bw" (type strin
 info: Product is created successfully (65eaab3c294b0b68c7210b2f).
 info: Cart was created successfully (65eaab3c294b0b68c7210b31).
 error: Cast to ObjectId failed for value "65eaab3c294b0b68c7210b31s" (type string) at path "_id" for model "Cart"
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀
+info: Database connected succesfuly 🚀
+info: Server running on http://localhost:8080 🚀

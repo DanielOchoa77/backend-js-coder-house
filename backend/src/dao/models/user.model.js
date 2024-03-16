@@ -7,12 +7,17 @@ const cartItemSchema = new mongoose.Schema({
 
 const userSchema = new Schema({
   first_name: { type: String, required: true },
-  last_name: { type: String},
+  last_name: { type: String },
   email: { type: String, required: true, unique: true },
   age: { type: Number, required: false },
   password: { type: String },
-  cartId: { type: [cartItemSchema], default:[] },
+  cartId: { type: [cartItemSchema], default: [] },
   role: { type: String, default: 'user' },
+  documents: [{
+    name: String,
+    reference: String
+  }],
+  last_connection: { type: Date },
 
 }, { timestamps: true });
 

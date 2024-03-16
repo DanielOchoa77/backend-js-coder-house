@@ -76,6 +76,9 @@ router.post('/auth/login', async (req, res, next) => {
       //return res.status(401).render('error', { title: 'Hello People 🖐️', messageError: 'Correo o contraseña invalidos.' });
       return res.status(401).json({ message: 'Correo o contraseña son invalidos' });
     }
+    user.last_connection = Date.now();
+
+    await authController.updateById(user.id, user);
 
     const token = createToken(user);
     res
@@ -94,7 +97,10 @@ router.get('/auth/current', passport.authenticate('jwt', { session: false }), au
   res.status(200).json(userDTO);
 });
 
-router.get('/auth/logout', (req, res) => {
+router.get('/auth/logout',passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const user = await UserModel.findById(req.user.id);
+  user.last_connection = Date.now();
+  await authController.updateById(user.id, user);
   res.clearCookie('access_token').redirect('/login');
 });
 
