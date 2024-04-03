@@ -23,6 +23,7 @@ export default class UserService {
     }
 
     static deleteById(id) {
+        console.log("id...",id);
         return usersRepository.deleteById(id);
     }
 
@@ -32,6 +33,10 @@ export default class UserService {
 
     static async getUserById(id) {
         return await usersRepository.getUserById(id);
+    }
+
+    static async getUserByInactivity(date) {
+        return await usersRepository.getUserById(date);
     }
    
 }

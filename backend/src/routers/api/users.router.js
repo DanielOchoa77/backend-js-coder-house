@@ -6,7 +6,7 @@ import passport from 'passport';
 
 const router = Router();
 
-router.get('/users', async (req, res, next) => {
+router.get('/users1', async (req, res, next) => {
   try {
     const users = await UserModel.find({});
     res.status(200).json(users);
@@ -63,6 +63,15 @@ router.put('/users/premium/:uid', passport.authenticate('jwt', { session: false 
     const { uid } = req.params;
     const result = await UsersController.changeRole(uid);
     res.status(result.statusCode).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/users/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+  try {
+    const user = await UsersController.getAllUser(req.user.id);
+    res.status(200).json(user.users);
   } catch (error) {
     next(error);
   }

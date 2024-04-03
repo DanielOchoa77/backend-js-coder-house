@@ -9,6 +9,9 @@
   <p><strong>Rol:</strong> {{userSession.role}}</p>
   <footer>
     <a href="/api/session/logout" role="button">Cerrar Sesión</a>
+    {{#if rolAdmin}}
+      <a href="/users" role="button">Usuarios</a>
+    {{/if}}
   </footer>
 </article>
 

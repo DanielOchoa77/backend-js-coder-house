@@ -39,9 +39,10 @@ router.get('/products', passport.authenticate('jwt', { session: false }), async 
     if (search) {
         criteria.category = search;
     }
+    const rolAdmin = user.role == 'admin';
     const result = await ProductsController.get(criteria, options);
     const data = buildResponsePaginatedHome({ ...result.products, sort, search });
-    res.render('products', { ...data, userSession: user });
+    res.render('products', { ...data, userSession: user, rolAdmin: rolAdmin });
 });
 
 router.get('/carts/:cid', passport.authenticate('jwt', { session: false }), async (req, res) => {
