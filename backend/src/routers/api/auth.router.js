@@ -73,8 +73,8 @@ router.post('/auth/login', async (req, res, next) => {
     const isNotValidPassword = !verifyPassword(password, user);
 
     if (isNotValidPassword) {
-      //return res.status(401).render('error', { title: 'Hello People 🖐️', messageError: 'Correo o contraseña invalidos.' });
-      return res.status(401).json({ message: 'Correo o contraseña son invalidos' });
+      return res.status(401).render('error', { title: 'Hello People 🖐️', messageError: 'Correo o contraseña invalidos.' });
+      //return res.status(401).json({ message: 'Correo o contraseña son invalidos' });
     }
     user.last_connection = Date.now();
 

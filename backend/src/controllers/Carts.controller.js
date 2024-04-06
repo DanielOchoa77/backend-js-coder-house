@@ -3,6 +3,9 @@ import ProductsController from './Products.controller.js';
 import TicketsController from './Tickets.controllers.js';
 import { logger } from '../config/logger.js'
 import UserServices from "../services/Users.service.js";
+import UsersController from './Users.controller.js';
+import { ObjectId } from 'mongodb';
+
 
 export default class CartsController {
   static async get() {
@@ -15,7 +18,7 @@ export default class CartsController {
           message: "Cart found",
           status: "Success",
           statusCode: 200
-        };  
+        };
       } else {
         return {
           message: "Carts not Found",
@@ -90,7 +93,7 @@ export default class CartsController {
     try {
       const productExist = await ProductsController.getById(pid);
       if (productExist.product) {
-        if(user.role === "user" ||(user.role === 'premium' && (user.id != productExist.product.owner))){
+        if (user.role === "user" || (user.role === 'premium' && (user.id != productExist.product.owner))) {
           const { quantity } = body;
           const cartExists = await CartsService.findById(cid);
           if (cartExists) {
@@ -274,10 +277,13 @@ export default class CartsController {
     let noStokProductList = [];
     let stokProductList = [];
     let result = {};
+    const userSearch = await UsersController.getUserById(req.user.id);
     const { cid } = req.params;
-    const email = req.user.email;
-    const cartList = req.user.cartId;
-    const cartFind = cartList.find((card) => card.cartId === cid);
+
+    const email = userSearch.email;
+    const cartList = userSearch.cartId;
+    const cartFind = cartList.find((cart) => cart.cartId.equals(new ObjectId(cid)));
+
     if (!cartFind) {
       return {
         message: `Carrito con id ${cid} no registado al usuario`,
@@ -290,7 +296,7 @@ export default class CartsController {
 
 
     for (const prod of productsListCart) {
-      let {product} = await ProductsController.getById(prod.product);
+      let { product } = await ProductsController.getById(prod.product);
       if (prod.quantity <= product.stock) {
         product.stock = product.stock - prod.quantity;
         let productStok = {
@@ -320,6 +326,15 @@ export default class CartsController {
       }
       const ticket = await TicketsController.create(saveTicket);
       result.ticket = ticket;
+      userSearch.cartId = [];
+      await UsersController.updateById(userSearch._id, userSearch);
+
+      return {
+        ticket: result.ticket,
+        message: `Se realizo la compra exitosamente # de ticket ${result.ticket.code} `,
+        status: "Success",
+        statusCode: 200
+      };
 
     }
     return result;

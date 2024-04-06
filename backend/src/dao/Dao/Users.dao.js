@@ -31,7 +31,7 @@ export default class UsersDaoMongoDB {
     }
 
     findById(uid) {
-        return UserModel.findById(uid);
+        return UserModel.findOne({ _id: uid });
     }
 
 }

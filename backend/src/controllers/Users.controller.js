@@ -49,4 +49,15 @@ export default class UsersController {
     const users = await UserService.deleteById(id);
     return users;
   }
+
+  static async getUserById(id) {
+    const users = await UserService.getUserById(id);
+    return users;
+  }
+
+  static async updateById(uid, user) {
+    const users = await UserService.updateById(uid, user);
+    return users;
+  }
+
 }

@@ -13,7 +13,7 @@ router.post('/carts', passport.authenticate('jwt', { session: false }), authMidd
     }
 });
 
-router.get('/carts/:cid', passport.authenticate('jwt', { session: false }), authMiddleware('user', 'admin'), async (req, res, next) => {
+router.get('/carts/:cid', passport.authenticate('jwt', { session: false }), authMiddleware('user', 'admin','premium'), async (req, res, next) => {
     try {
         const cid = req.params.cid;
         const result = await CartsController.getProductByCartId(cid);

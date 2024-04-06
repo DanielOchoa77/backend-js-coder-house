@@ -1,5 +1,7 @@
 import ProductsService from '../services/Products.service.js';
-import { logger } from '../config/logger.js'
+import { logger } from '../config/logger.js';
+import EmailService from '../services/email.service.js';
+import UsersController from '../controllers/Users.controller.js';
 
 export default class ProductsController {
 
@@ -86,7 +88,7 @@ export default class ProductsController {
     }
   }
 
-  static async create(data,user) {
+  static async create(data, user) {
     try {
       console.log(data.code);
       const findProductByCode = await ProductsService.findByCode(data.code);
@@ -97,8 +99,8 @@ export default class ProductsController {
           statusCode: 404
         };
       } else {
-        data.owner = user.role === 'premium' ? user.id:'admin';
-        
+        data.owner = user.role === 'premium' ? user.id : 'admin';
+
         const product = await ProductsService.create(data);
         logger.info(`Product is created successfully (${product._id}).`);
         if (product) {
@@ -153,14 +155,29 @@ export default class ProductsController {
     }
   }
 
-  static async deleteById(id,user) {
+  static async deleteById(id, user) {
     try {
       const product = await ProductsService.findById(id);
       if (product) {
-        if(user.role === "admin" || (user.role === 'premium' && product.owner === user.id)){
+        if (user.role === "admin" || (user.role === 'premium' && product.owner === user.id)) {
           const productDeleteded = await ProductsService.deleteById({ _id: id });
           logger.info(`Product successfully deleteded (${id}).`);
+
           if (productDeleteded && productDeleteded.deletedCount > 0) {
+            if (product.owner != 'admin') {
+              const userRol = await UsersController.getUserById(product.owner);
+              if (userRol.role === 'premium') {
+                const emailService = EmailService.getInstance();
+                await emailService.sendEmail(
+                  user.email,
+                  `Hola, ${user.first_name}`,
+                  `<div>
+                      <h1>El siguiente producto -> ${product.title} ha sido eliminado</h1>
+                    </div>`
+                );
+              }
+            }
+
             return {
               message: "Product successfully deleteded",
               status: "Success",

@@ -3,6 +3,7 @@ import productRouter from './routers/api/products.router.js';
 import cartRouter from './routers/api/carts.router.js';
 import prodRouterview from './routers/views/product.router.js';
 import userRouterview from './routers/views/user.router.js';
+import cartRouterview from './routers/views/cart.router.js';
 import homeRouterview from './routers/views/home.router.js';
 import messageRouter from './routers/views/message.router.js';
 import cors from 'cors';
@@ -79,7 +80,7 @@ if (process.env.NODE_ENV == 'production') {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 }
 
-app.use('/', prodRouterview, homeRouterview, userRouterview);
+app.use('/', prodRouterview, homeRouterview, userRouterview, cartRouterview);
 app.use('/chat', messageRouter);
 app.use('/api', productRouter, cartRouter, usersRouter, authRouter, sessionsRouter);
 

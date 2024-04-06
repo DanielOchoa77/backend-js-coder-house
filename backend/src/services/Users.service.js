@@ -23,7 +23,6 @@ export default class UserService {
     }
 
     static deleteById(id) {
-        console.log("id...",id);
         return usersRepository.deleteById(id);
     }
 

@@ -2,6 +2,7 @@
   <header>
     <h1>Te damos la bienvenida</h1>
   </header>
+  <p><strong>Id:</strong> {{userSession._id}}</p>
   <p><strong>Nombre:</strong> {{userSession.first_name}}</p>
   <p><strong>Apellido:</strong> {{userSession.last_name}}</p>
   <p><strong>Correo:</strong> {{userSession.email}}</p>
@@ -10,42 +11,43 @@
   <footer>
     <a href="/api/session/logout" role="button">Cerrar Sesión</a>
     {{#if rolAdmin}}
-      <a href="/users" role="button">Usuarios</a>
+    <a href="/users" role="button">Usuarios</a>
     {{/if}}
+    <a href="/carts" role="button">Ver Carrito</a>
   </footer>
 </article>
 
 <h1>Lista de productos</h1>
-  <table>
+<table>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Titulo</th>
+    <th scope="col">Descripcion</th>
+    <th scope="col">Precio</th>
+    <th scope="col">Link imagen</th>
+    <th scope="col">Codigo</th>
+    <th scope="col">Stock</th>
+    <th scope="col">Categoria</th>
+    <th scope="col">Estado</th>
+    <th scope="col">Opciones</th>
+  </tr>
+  <tbody>
+    {{#each payload}}
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Titulo</th>
-      <th scope="col">Descripcion</th>
-      <th scope="col">Precio</th>
-      <th scope="col">Link imagen</th>
-      <th scope="col">Codigo</th>
-      <th scope="col">Stock</th>
-      <th scope="col">Categoria</th>
-      <th scope="col">Estado</th>
-      <th scope="col">Opciones</th>
+      <td>{{this._id}}</td>
+      <td>{{this.title}}</td>
+      <td>{{this.description}}</td>
+      <td>{{this.price}}</td>
+      <td>{{this.thumbnail}}</td>
+      <td>{{this.code}}</td>
+      <td>{{this.stock}}</td>
+      <td>{{this.category}}</td>
+      <td>{{#if this.status}}Habilitado {{else}}Deshabilitado{{/if}}</td>
+      <td><a href="/carts/product/{{this._id}}" role="button">Agregar al Carrito</a></td>
     </tr>
-    <tbody>
-      {{#each payload}}
-      <tr>
-        <td>{{this._id}}</td>
-        <td>{{this.title}}</td>
-        <td>{{this.description}}</td>
-        <td>{{this.price}}</td>
-        <td>{{this.thumbnail}}</td>
-        <td>{{this.code}}</td>
-        <td>{{this.stock}}</td>
-        <td>{{this.category}}</td>
-        <td>{{#if this.status}}Habilitado {{else}}Deshabilitado{{/if}}</td>
-         <td><button>Agregar al Carrito</button></td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
-  <p>Página actual: {{page}}</p>
-  <a href="{{prevLink}}" role="button" {{#unless hasPrevPage}}disabled{{/unless}}>Anterior</a>
-  <a href="{{nextLink}}" role="button" {{#unless hasNextPage}}disabled{{/unless}}>Siguiente</a>
+    {{/each}}
+  </tbody>
+</table>
+<p>Página actual: {{page}}</p>
+<a href="{{prevLink}}" role="button" {{#unless hasPrevPage}}disabled{{/unless}}>Anterior</a>
+<a href="{{nextLink}}" role="button" {{#unless hasNextPage}}disabled{{/unless}}>Siguiente</a>
