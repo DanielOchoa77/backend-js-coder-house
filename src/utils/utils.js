@@ -15,7 +15,8 @@ export const isValidPassword = (password, user) => bcrypt.compareSync(password, 
 export const verifyPassword = (password, user) => bcrypt.compareSync(password, user.password);
 
 
-export const URL_BASE = 'http://localhost:8080/api';
+//export const URL_BASE = 'http://localhost:8080/api';
+export const URL_BASE = 'https://backend-js-coder-house-production.up.railway.app/api';
 
 export const buildResponsePaginated = (data, baseUrl = URL_BASE) => {
     return {
@@ -61,9 +62,11 @@ export const buildResponsePaginated = (data, baseUrl = URL_BASE) => {
       //hasNextPage: Indicador para saber si la página siguiente existe.
       hasNextPage: data.hasNextPage,
       //prevLink: Link directo a la página previa (null si hasPrevPage=false)
-      prevLink: data.hasPrevPage ? `http://localhost:8080/products?limit=${data.limit}&page=${data.prevPage}` : null,
+      //prevLink: data.hasPrevPage ? `http://localhost:8080/products?limit=${data.limit}&page=${data.prevPage}` : null,
+      prevLink: data.hasPrevPage ? `https://backend-js-coder-house-production.up.railway.app/products?limit=${data.limit}&page=${data.prevPage}` : null,
       //nextLink: Link directo a la página siguiente (null si hasNextPage=false)
-      nextLink: data.hasNextPage ? `http://localhost:8080/products?limit=${data.limit}&page=${data.nextPage}` : null,
+      //nextLink: data.hasNextPage ? `http://localhost:8080/products?limit=${data.limit}&page=${data.nextPage}` : null,
+      nextLink: data.hasNextPage ? `https://backend-js-coder-house-production.up.railway.app/products?limit=${data.limit}&page=${data.nextPage}` : null,
     };  
   };
 
