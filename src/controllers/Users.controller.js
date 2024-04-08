@@ -1,5 +1,6 @@
 import UserService from "../services/Users.service.js";
 import UsersDTO from "../dto/users.dto.js";
+import EmailService from '../services/email.service.js';
 
 
 export default class UsersController {
@@ -39,12 +40,22 @@ export default class UsersController {
   }
 
   static async deleteByInactivity() {
-    const users = await UserService.getAll();
-    if (users) {
-      return new UsersDTO(users);
-    }
+    const dateInactivity = new Date();
+    dateInactivity.setDate(dateInactivity.getDate() - 2);
+    const usersInactivity = await UserService.getUserByInactivity(dateInactivity);
+    usersInactivity.map(user => {
+        UserService.deleteById(user.id);
+        const emailService = EmailService.getInstance();
+        emailService.sendEmail(
+          user.email,
+          `Hola, ${user.first_name}`,
+          `<div>
+            <h1>Se ha eliminado su usuario por inactividad</h1>
+          </div>`
+        );
+    })
+    return usersInactivity
   }
-
   static async delete(id) {
     const users = await UserService.deleteById(id);
     return users;

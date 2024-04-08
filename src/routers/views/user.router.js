@@ -14,7 +14,6 @@ router.get('/users/delete/:uid', passport.authenticate('jwt', { session: false }
     try {
       const { params: { uid } } = req;
       await UsersController.delete({ _id: uid });
-      console.log("entro");
       res.status(200)
       .render ('usersInfo', { messageInfo: 'Se elimino el usuario correctamente.' });
     } catch (error) {

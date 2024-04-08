@@ -35,7 +35,7 @@ export default class UserService {
     }
 
     static async getUserByInactivity(date) {
-        return await usersRepository.getUserById(date);
+        return await usersRepository.getUserByInactivity( date );
     }
    
 }

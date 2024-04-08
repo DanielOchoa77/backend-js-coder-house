@@ -35,8 +35,8 @@ export default class UserRepository{
         return await this.dao.findById(id);
     }
 
-    async getUserByInactivity(uid, cid) {
-        return await this.dao.updateByIdPush({ age: { $gte: 18 } });
+    async getUserByInactivity(date) {
+            return await this.dao.getUserByInactivity(date);
     }
 
 }

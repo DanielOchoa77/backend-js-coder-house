@@ -169,8 +169,8 @@ export default class ProductsController {
               if (userRol.role === 'premium') {
                 const emailService = EmailService.getInstance();
                 await emailService.sendEmail(
-                  user.email,
-                  `Hola, ${user.first_name}`,
+                  userRol.email,
+                  `Hola, ${userRol.first_name}`,
                   `<div>
                       <h1>El siguiente producto -> ${product.title} ha sido eliminado</h1>
                     </div>`

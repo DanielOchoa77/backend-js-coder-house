@@ -34,4 +34,8 @@ export default class UsersDaoMongoDB {
         return UserModel.findOne({ _id: uid });
     }
 
+    getUserByInactivity(date){
+        return UserModel.find({ last_connection: { $lt: date } })
+    }
+
 }
