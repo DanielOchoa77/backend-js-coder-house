@@ -79,7 +79,7 @@ router.get('/users/', passport.authenticate('jwt', { session: false }), async (r
 
 router.delete('/users/', passport.authenticate('jwt', { session: false }), authMiddleware('admin'), async (req, res, next) => {
   try {
-    const usersDelete = await UsersController.deleteByInactivity();
+    const usersDelete = await UsersController.deleteUserByInactivity();
     res.status(200).json(usersDelete);
 } catch (error) {
     next(error);

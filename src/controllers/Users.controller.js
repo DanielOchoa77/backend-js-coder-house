@@ -39,7 +39,7 @@ export default class UsersController {
     }
   }
 
-  static async deleteByInactivity() {
+  static async deleteUserByInactivity() {
     const dateInactivity = new Date();
     dateInactivity.setDate(dateInactivity.getDate() - 2);
     const usersInactivity = await UserService.getUserByInactivity(dateInactivity);
